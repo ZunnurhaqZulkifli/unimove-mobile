@@ -1,6 +1,6 @@
 # unimove
 
-A new Flutter project.
+An application that is built by your's truely for student educational purposes, built application for uniten.
 
 ## Getting Started
 
