@@ -3,28 +3,74 @@ import 'package:flutter/material.dart';
 
 class AppThemes {
   static final ThemeData lightTheme = ThemeData(
-    primarySwatch: Colors.red,
+    primarySwatch: MaterialColor(
+        Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromARGB(255, 245, 61, 61),
-      elevation: 0,
+      backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
+      elevation: 5,
+      toolbarHeight: 70,
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+    textTheme: TextTheme(
+      displayLarge: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.w500,
+      ),
+      displayMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 36.0,
+        fontStyle: FontStyle.italic,
+      ),
+      displaySmall: TextStyle(
+        color: Colors.white,
+        fontSize: 14.0,
+        fontFamily: 'Hind',
+      ),
     ),
   );
 
   static final ThemeData darkTheme = ThemeData(
-    primarySwatch: Colors.red,
+    primarySwatch: MaterialColor(
+        Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.black,
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromARGB(255, 192, 0, 0),
-      elevation: 0,
+      backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
+      elevation: 5,
+      toolbarHeight: 70,
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    ),
+    textTheme: TextTheme(
+      displayLarge: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.w500,
+      ),
+      displayMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 36.0,
+        fontStyle: FontStyle.italic,
+      ),
+      displaySmall: TextStyle(
+        color: Colors.white,
+        fontSize: 14.0,
+        fontFamily: 'Hind',
+      ),
     ),
   );
 }
 
 class ThemeColors {
-  static const Color primary1 = Color.fromARGB(255, 245, 61, 61);
+  static const Color primary1 = Color.fromRGBO(246, 4, 4, 1);
   static const Color primary2 = Color.fromARGB(255, 192, 0, 0);
   static const Color primary3 = Color.fromARGB(255, 255, 255, 255);
   static const Color primary4 = Color.fromARGB(255, 0, 0, 0);
@@ -48,7 +94,7 @@ class ThemeColors {
   static const Color babyBlue = Color.fromRGBO(103, 164, 255, 1);
 
   static const Color mainRed = Color.fromRGBO(227, 0, 23, 1);
-  static const Color red3 = Color.fromRGBO(205, 7, 30, 1);
+  static const Color red3 = Color.fromRGBO(246, 4, 4, 1);
   static const Color red4 = Color.fromRGBO(255, 213, 0, 1);
 
   static const Color purple110 = Color.fromRGBO(184, 113, 255, 1);
@@ -106,7 +152,20 @@ class ThemeColors {
   static const Color warning5 = Color.fromRGBO(255, 171, 54, 1);
   static const Color success7 = Color.fromRGBO(52, 164, 21, 1);
   static const Color success6 = Color.fromRGBO(77, 196, 31, 1);
-  static const Color success4 = Color.fromRGBO(152, 238, 93, 1);
+  static const Color success4 = Color.fromRGBO(0, 207, 76, 1);
   static const Color success1 = Color.fromRGBO(237, 253, 212, 1);
   static const Color white = Colors.white;
+
+  static const Map<int, Color> primarySwatch = {
+    50: Color.fromRGBO(246, 4, 4, .1),
+    100: Color.fromRGBO(246, 4, 4, .2),
+    200: Color.fromRGBO(246, 4, 4, .3),
+    300: Color.fromRGBO(246, 4, 4, .4),
+    400: Color.fromRGBO(246, 4, 4, .5),
+    500: Color.fromRGBO(246, 4, 4, .6),
+    600: Color.fromRGBO(246, 4, 4, .7),
+    700: Color.fromRGBO(246, 4, 4, .8),
+    800: Color.fromRGBO(246, 4, 4, .9),
+    900: Color.fromRGBO(246, 4, 4, 1),
+  };
 }

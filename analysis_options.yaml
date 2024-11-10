@@ -7,6 +7,13 @@
 
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
+analyzer:
+  errors:
+    non_constant_identifier_names: ignore
+    prefer_adjacent_string_concatenation: ignore
+    prefer_interpolation_to_compose_strings: ignore
+    sort_child_properties_last: ignore
+    unnecessary_brace_in_string_interps: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:
@@ -26,6 +33,7 @@ linter:
     prefer_const_constructors: false
     prefer_const_literals_to_create_immutables: false
     constant_identifier_names: false
+    unnecessary_string_interpolations: false
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

@@ -28,7 +28,7 @@ SnackbarController topSnackBarSuccess({
       ),
     ),
     snackPosition: SnackPosition.TOP,
-    backgroundColor: ThemeColors.primary4,
+    backgroundColor: ThemeColors.success4,
     dismissDirection: DismissDirection.up,
     barBlur: 0.4,
     colorText: Colors.white,
