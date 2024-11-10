@@ -13,7 +13,10 @@ class AppThemes {
       toolbarHeight: 70,
       foregroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
       ),
     ),
     textTheme: TextTheme(
@@ -46,7 +49,10 @@ class AppThemes {
       toolbarHeight: 70,
       foregroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
       ),
     ),
     textTheme: TextTheme(
