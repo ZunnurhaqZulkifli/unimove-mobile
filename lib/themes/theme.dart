@@ -1,12 +1,12 @@
-// lib/theme.dart
 import 'package:flutter/material.dart';
 
 class AppThemes {
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: 'Quicksand',
     primarySwatch: MaterialColor(
         Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: const Color.fromARGB(255, 241, 241, 241),
     appBarTheme: AppBarTheme(
       backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
       elevation: 5,
@@ -34,15 +34,43 @@ class AppThemes {
         color: Colors.white,
         fontSize: 14.0,
         fontFamily: 'Hind',
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ThemeColors.primary1,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        textStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    cardTheme: CardTheme(
+      color: ThemeColors.primary1,
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ThemeColors.primary1,
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   );
 
   static final ThemeData darkTheme = ThemeData(
+    fontFamily: 'Quicksand',
     primarySwatch: MaterialColor(
         Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
     appBarTheme: AppBarTheme(
       backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
       elevation: 5,
@@ -70,6 +98,26 @@ class AppThemes {
         color: Colors.white,
         fontSize: 14.0,
         fontFamily: 'Hind',
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ThemeColors.primary1,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        textStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    cardTheme: CardTheme(
+      color: ThemeColors.primary1,
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
   );

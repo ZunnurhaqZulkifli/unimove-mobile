@@ -12,6 +12,7 @@ analyzer:
     non_constant_identifier_names: ignore
     prefer_adjacent_string_concatenation: ignore
     prefer_interpolation_to_compose_strings: ignore
+    sized_box_for_whitespace: ignore
     sort_child_properties_last: ignore
     unnecessary_brace_in_string_interps: ignore
 include: package:flutter_lints/flutter.yaml

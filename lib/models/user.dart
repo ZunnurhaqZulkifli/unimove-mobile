@@ -7,6 +7,7 @@ class User {
   String? email;
   String? tac;
   Profile? profile;
+  bool verified = false;
 
   User({
     required this.id,
@@ -17,6 +18,7 @@ class User {
     required this.email,
     required this.tac,
     required this.profile,
+    required this.verified,
   });
 
   User.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class User {
     typeable_id = json['typeable_id'].toString();
     email = json['email'] ?? '';
     tac = json['tac'].toString();
+    verified = json['profile'] != null ? true : false;
     profile = json['profile'] != null
         ? Profile.fromJson(
             json['profile'],

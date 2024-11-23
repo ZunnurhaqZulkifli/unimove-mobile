@@ -1,12 +1,14 @@
-import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/pages/dashboard.dart';
 import 'package:unimove/pages/splash.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'dart:io';
+
 part 'api_config.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -69,6 +71,17 @@ class Api {
 
       print(response.data['data']['token']);
     } on DioException catch (e) {
+      if (e.response != null) {
+        var error = e.response!.data['message'];
+
+        topSnackBarAction(
+          title: 'Authentication Error',
+          message: error ?? 'Invalid email or password',
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
       print(e);
     }
   }
@@ -105,6 +118,7 @@ class Api {
       if (response.statusCode == 200) {
         var responseData = response.data['data'];
         controller.setUser(User.fromJson(responseData));
+        controller.user_type.value = responseData['typeable_type'] ?? '';
 
         topSnackBarSuccess(
           title: 'Login Successful !',
@@ -113,10 +127,22 @@ class Api {
 
         print(controller.user!.name);
         return true;
+      } else {
+        return false;
       }
     } on DioException catch (e) {
       if (e.response != null) {
         print(e.response!.data);
+
+        if (e.response!.data['message'] == 'Unauthenticated.') {
+          topSnackBarAction(
+            title: 'Session Expired',
+            message: 'Please login again',
+          );
+
+          return false;
+        }
+
         Map<String, dynamic> errors = e.response!.data['errors'];
         errors.forEach((key, value) {
           print('$key: ${value.join(', ')}');
@@ -129,11 +155,47 @@ class Api {
       } else {
         print(e);
       }
+
+      return false;
     } catch (e) {
       print(e);
+
+      return false;
+    }
+  }
+
+  Future getBiometric() async {
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/user-biometric',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'][0];
+        return Biometric.fromJson(responseData);
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
     }
 
-    return false;
+    return [];
   }
 
   Future<String> requestTac({
@@ -164,6 +226,52 @@ class Api {
     }
 
     return '';
+  }
+
+  Future updateProfile(Map<String, dynamic> data) async {
+    try {
+      var response = await dio.post(
+        '$endpoint/api/v1/update-profile',
+        options: Options(
+          headers: headers(),
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        topSnackBarSuccess(
+          title: 'Profile Updated !',
+          message: response.data['message'],
+        );
+
+        topSnackBarAction(
+          title: 'Please Wait...',
+          message: 'Reloading Updated Data, Please Login Again',
+        );
+
+        Future.delayed(Duration(seconds: 7), () {
+          controller.clearSettings();
+          Get.offAll(() => SplashScreen());
+        });
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future register({

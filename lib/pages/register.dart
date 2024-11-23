@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:unicons/unicons.dart';
 import 'package:unimove/api/api.dart';
+import 'package:unimove/helpers/string_helpers.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:unimove/themes/theme_controller.dart';
@@ -75,10 +76,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 onChanged: (value) {
-                  Future.delayed(Duration(milliseconds: 100), () {
+                  Future.delayed(Duration(milliseconds: 0), () {
                     nameController.text = value
-                        .replaceAll(' ', '-')
-                        .toUpperCase(); // Set username to lowercase and remove spaces
+                        // .replaceAll(' ', '-')
+                        .toString()
+                        .toTitleCase(); // Set username to lowercase and remove spaces
                   });
                 },
                 textAlignVertical: TextAlignVertical.center,
