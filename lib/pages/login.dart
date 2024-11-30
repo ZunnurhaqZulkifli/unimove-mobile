@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login Page',
+          'Login',
           style: themeController.currentTheme.textTheme.displayLarge,
         ),
       ),
@@ -33,6 +33,17 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                child: Image(
+                  image: AssetImage(
+                    'assets/images/login.png',
+                  ),
+                ),
+                height: 200,
+              ),
+              SizedBox(
+                height: 30,
+              ),
               TextField(
                 controller: emailController,
                 enableIMEPersonalizedLearning: true,

@@ -206,12 +206,12 @@ class _UpdateProfileState extends State<UpdateProfile> {
       ),
       floatingActionButton: (user_type != '')
           ? FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
                 if (canSubmit) {
                   profileData['type'] = user_type;
                   print(profileData);
 
-                  api.updateProfile(profileData);
+                  await api.updateProfile(profileData);
                 } else {
                   setState(() {
                     user_type = '';

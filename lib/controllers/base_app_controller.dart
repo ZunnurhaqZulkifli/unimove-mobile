@@ -1,5 +1,6 @@
 import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
+import 'package:unimove/controllers/destination_controller.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/pages/login.dart';
 import 'package:unimove/models/user.dart';
@@ -11,6 +12,8 @@ class BaseAppController extends GetxController {
   RxString user_type = ''.obs;
   late User? user;
   DashboardController dashboardController = Get.put(DashboardController());
+  DestinationController destinationController =
+      Get.put(DestinationController());
   BiometricController biometricController = Get.put(BiometricController());
 
   @override
@@ -37,7 +40,8 @@ class BaseAppController extends GetxController {
   void getProfile() async {
     // clearSettings(); // master reset
 
-    print('hit dashbord controller');
+    // reference data loaded from the api
+    await destinationController.loadDestinations();
 
     if (auth_token.value == '') {
       clearSettings();
@@ -50,7 +54,9 @@ class BaseAppController extends GetxController {
         clearSettings();
         Get.offAll(() => LoginPage());
       } else {
-        await biometricController.setupAppBiometrics(user!, dashboardController, this);
+        // this redirects user to the biometrics page
+        await biometricController.setupAppBiometrics(
+            user!, dashboardController, this);
       }
     }
   }

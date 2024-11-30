@@ -6,8 +6,9 @@ import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/pages/home.dart';
-import 'package:unimove/pages/order.dart';
+import 'package:unimove/pages/booking.dart';
 import 'package:unimove/pages/profile.dart';
+import 'package:unimove/pages/unverified_home.dart';
 import 'package:unimove/pages/wallet.dart';
 import 'package:unimove/themes/theme.dart';
 
@@ -72,7 +73,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Book',
           'route': '/book',
-          'page': OrderPage(),
+          'page': BookingPage(),
           'tab': BottomNavyBarItem(
             title: Text('Book'),
             textAlign: TextAlign.center,
@@ -147,7 +148,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Book',
           'route': '/book',
-          'page': OrderPage(),
+          'page': BookingPage(),
           'tab': BottomNavyBarItem(
             title: Text('Book'),
             textAlign: TextAlign.center,
@@ -203,7 +204,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Home',
           'route': '/home',
-          'page': HomePage(),
+          'page': UnverifiedHomePage(),
           'tab': BottomNavyBarItem(
             title: Text('Home'),
             textAlign: TextAlign.center,

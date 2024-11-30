@@ -3,7 +3,6 @@ import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/models/user.dart';
-import 'package:unimove/pages/dashboard.dart';
 import 'package:unimove/pages/splash.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -24,6 +23,7 @@ class Api {
   String endpoint = ENDPOINT;
   final dio = Dio();
   BaseAppController controller = Get.find();
+  BiometricController biometricController = Get.put(BiometricController());
 
   Map<String, String> headers() {
     String token = storage.read('token') ?? '';
@@ -66,7 +66,13 @@ class Api {
           message: 'Welcome back, ${controller.user!.name}',
         );
 
-        Get.offAll(() => Dashboard());
+        Future.delayed(Duration(seconds: 1), () {
+          controller.getToken();
+          controller.getProfile();
+        });
+
+        // id the thing fucks up
+        // Get.offAll(() => Dashboard());
       }
 
       print(response.data['data']['token']);
@@ -174,7 +180,8 @@ class Api {
       );
 
       if (response.statusCode == 200) {
-        var responseData = response.data['data'][0];
+        var responseData = response.data['data'];
+
         return Biometric.fromJson(responseData);
       }
     } on DioException catch (e) {
@@ -228,6 +235,50 @@ class Api {
     return '';
   }
 
+  Future<bool> updateBiometric(Map<String, dynamic> data) async {
+    try {
+      var response = await dio.post(
+        '$endpoint/api/v1/update-biometric',
+        options: Options(
+          headers: headers(),
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        topSnackBarSuccess(
+          title: 'Biometric Updated !',
+          message: response.data['message'],
+        );
+
+        return true;
+      }
+
+      return false;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    return false;
+  }
+
   Future updateProfile(Map<String, dynamic> data) async {
     try {
       var response = await dio.post(
@@ -249,7 +300,7 @@ class Api {
           message: 'Reloading Updated Data, Please Login Again',
         );
 
-        Future.delayed(Duration(seconds: 7), () {
+        Future.delayed(Duration(seconds: 3), () {
           controller.clearSettings();
           Get.offAll(() => SplashScreen());
         });
@@ -311,6 +362,40 @@ class Api {
         );
 
         Get.offAll(() => SplashScreen());
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getDestinations() async {
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/destinations',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'];
+
+        controller.destinationController.setDestinationsModel(responseData);
       }
     } on DioException catch (e) {
       if (e.response != null) {

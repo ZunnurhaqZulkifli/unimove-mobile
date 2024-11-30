@@ -46,6 +46,7 @@ dependencies:
   local_auth: ^2.3.0
   local_auth_ios: ^1.1.6
   local_auth_android: ^1.0.43
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
   assets:
       - assets/images/splash_background.png
       - assets/images/update_profile.png
+      - assets/images/login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

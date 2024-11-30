@@ -17,6 +17,7 @@ class Biometric {
   bool? face_id;
   bool? fingerprint;
   bool? passcode;
+  String? passcode_number;
   bool? enabled = false;
 
   Biometric({
@@ -24,6 +25,7 @@ class Biometric {
     required this.face_id,
     required this.fingerprint,
     required this.passcode,
+    required this.passcode_number,
     required this.enabled,
   });
 
@@ -32,6 +34,7 @@ class Biometric {
     face_id = (json['face_id'] == 1) ? true : false;
     fingerprint = (json['fingerprint'] == 1) ? true : false;
     passcode = (json['passcode'] == 1) ? true : false;
+    passcode_number = json['passcode_number'].toString();
     enabled = (json['enabled'] == 1) ? true : false;
   }
 }
@@ -43,6 +46,7 @@ class BiometricController extends GetxController {
     face_id: false,
     fingerprint: false,
     passcode: true,
+    passcode_number: '',
     enabled: false,
   ).obs;
 
@@ -98,9 +102,7 @@ class BiometricController extends GetxController {
         UpdateProfilePopup();
         dashboardController.initialize(controller: controller);
       } else {
-
         if (biometric.value.enabled!) {
-
           // face_id only
           if (biometric.value.face_id == true) {
             bool authed = await authenticate();
@@ -114,7 +116,6 @@ class BiometricController extends GetxController {
 
                 print('passcode auth attempts : ${auth_attempts.value}');
                 setupAppBiometrics(user, dashboardController, controller);
-
               } else {
                 authenticatePasscode();
                 dashboardController.initialize(controller: controller);
@@ -140,7 +141,14 @@ class BiometricController extends GetxController {
               }
             }
           }
+
+          if (biometric.value.passcode == true && biometric.value.fingerprint == false && biometric.value.face_id == false) {
+            authenticatePasscode();
+            dashboardController.initialize(controller: controller);
+          }
         } else {
+          print('this user is using the passcode');
+          
           authenticatePasscode();
           dashboardController.initialize(controller: controller);
         }
@@ -156,12 +164,12 @@ class BiometricController extends GetxController {
       face_id: false,
       fingerprint: false,
       passcode: true,
+      passcode_number: '',
       enabled: false,
     );
   }
 
   void authenticatePasscode() {
-    
     print('passcode');
     Get.offAll(() => PasscodePage());
   }
