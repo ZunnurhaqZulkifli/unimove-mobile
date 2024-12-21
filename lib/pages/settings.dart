@@ -16,7 +16,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings Page'),
+        title: Text(
+          'Settings Page',
+          style: themeController.currentTheme.textTheme.displayLarge,
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),

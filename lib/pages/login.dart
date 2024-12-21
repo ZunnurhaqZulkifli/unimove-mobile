@@ -105,9 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: Get.width / 2.5,
                       child: ElevatedButton(
                         onPressed: () async {
-                          Get.to(
-                            () => RegisterPage(),
-                          );
+                          Get.to(() => RegisterPage());
                         },
                         child: Text(
                           'Register',

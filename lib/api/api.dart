@@ -1,14 +1,18 @@
 import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
+import 'package:unimove/controllers/booking_controller.dart';
+import 'package:unimove/controllers/order_controller.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/models/user.dart';
+import 'package:unimove/models/wallet.dart';
 import 'package:unimove/pages/splash.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 
 part 'api_config.dart';
+part 'api_2.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -35,13 +39,22 @@ class Api {
     };
   }
 
-  Future testAllEndpoint() async {
-    return [
-      await dio.get(
+  Future checkApi() async {
+    try {
+      var response = await dio.get(
         '$endpoint/api/v1/check',
-      ),
-      await login(email: 'zunnurhaq123@gmail.com', password: 'Password1234'),
-    ];
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } on DioException catch (e) {
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+
+    return false;
   }
 
   Future login({required String email, required String password}) async {

@@ -1,11 +1,14 @@
 import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
 import 'package:unimove/controllers/destination_controller.dart';
+import 'package:unimove/controllers/order_controller.dart';
+import 'package:unimove/controllers/wallet_controller.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/pages/login.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/api/api.dart';
 import 'package:get/get.dart';
+import 'package:unimove/pages/maintainance_mode.dart';
 
 class BaseAppController extends GetxController {
   RxString auth_token = ''.obs;
@@ -15,11 +18,29 @@ class BaseAppController extends GetxController {
   DestinationController destinationController =
       Get.put(DestinationController());
   BiometricController biometricController = Get.put(BiometricController());
+  OrderController orderController = Get.put(OrderController());
+  WalletController walletController = Get.put(WalletController());
+
+  RxBool hasOrder = false.obs;
+  RxBool waitingRide = false.obs;
+  RxBool onRide = false.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
     getToken();
+  }
+
+  Future<bool> checkStatus() async {
+    print('loading current api status...');
+    bool status = await api.checkApi();
+
+    if (!status) {
+      clearSettings();
+      Get.offAll(() => MaintainanceMode());
+    }
+
+    return status;
   }
 
   void setToken(String token) {
@@ -42,6 +63,7 @@ class BaseAppController extends GetxController {
 
     // reference data loaded from the api
     await destinationController.loadDestinations();
+    await orderController.loadOrders();
 
     if (auth_token.value == '') {
       clearSettings();
@@ -66,9 +88,15 @@ class BaseAppController extends GetxController {
     user = null;
     auth_token.value = '';
     user_type.value = '';
-    storage.erase();
+    // storage.erase(); // clear all storage
+    storage.write('token', '');
     dashboardController.clearSettings();
+    destinationController.clearSettings();
     biometricController.clearSettings();
+    orderController.clearSettings();
+    hasOrder.value = false;
+    waitingRide.value = false;
+    onRide.value = false;
   }
 }
 

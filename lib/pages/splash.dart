@@ -26,8 +26,14 @@ class _SplashScreenState extends State<SplashScreen>
         isVisible = true;
       });
 
-      Future.delayed(Duration(milliseconds: 400), () {
-        controller.getProfile();
+      Future.delayed(Duration(milliseconds: 400), () async {
+        bool status = await controller.checkStatus();
+
+        if (!status) {
+          return;
+        } else {
+          controller.getProfile();
+        }
       });
     });
   }

@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                   'Hi ${controller.user!.name},',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
                 Row(
@@ -101,6 +101,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             PhotoCarousel(),
+            QuickIcons(),
           ],
         ),
       ),
@@ -119,64 +120,40 @@ class PhotoCarouselState extends State<PhotoCarousel> {
   PageController pageController = PageController();
 
   List<Widget> photoWidgets = [
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
-    SizedBox(
-      width: 100,
-      height: 100,
-      child: Card(
-        color: ThemeColors.primary1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    Card(
+      color: ThemeColors.primary1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
   ];
@@ -218,6 +195,126 @@ class PhotoCarouselState extends State<PhotoCarousel> {
             strokeWidth: 0.8,
             dotColor: Colors.grey,
             activeDotColor: ThemeColors.red3,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class QuickIcons extends StatefulWidget {
+  const QuickIcons({super.key});
+
+  @override
+  QuickIconsState createState() => QuickIconsState();
+}
+
+class QuickIconsState extends State<QuickIcons> {
+  PageController pageController = PageController();
+
+  List<Widget> icons = [
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        width: 60,
+        height: 100,
+        child: Card(
+          color: ThemeColors.primary1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(
+              Radius.circular(100),
+            ),
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                icons.length,
+                (context) => icons[context],
+              ),
+            ),
           ),
         ),
       ],

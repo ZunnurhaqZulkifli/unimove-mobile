@@ -16,7 +16,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int selected_index = 0;
   int current_index = 0;
-  late PageController page_controller;
+  PageController page_controller = PageController();
   ThemeController themeController = Get.find();
   BaseAppController baseAppController = Get.find();
   DashboardController controller = Get.find();
@@ -24,8 +24,10 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    page_controller = PageController();
-    controller.initialize(controller: baseAppController);
+
+    Future.delayed(Duration.zero, () {
+      controller.initialize(controller: baseAppController);
+    });
   }
 
   @override

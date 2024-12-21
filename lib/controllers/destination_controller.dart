@@ -16,6 +16,21 @@ class DestinationController extends GetxController {
       destinations.add(Destination.fromJson(item));
     }
   }
+
+  String findDestination(String? id) {
+    for (var destination in destinations) {
+      if (destination.id == id) {
+        return destination.name!;
+      }
+    }
+
+    return '';
+  }
+
+  void clearSettings() {
+    isLoaded = false;
+    destinations.clear();
+  }
 }
 
 class Destination {
@@ -50,5 +65,9 @@ class Destination {
       status: json['status'].toString(),
       image: json['image'].toString(),
     );
+  }
+
+  void findName() {
+    print('Name: ${name}');
   }
 }

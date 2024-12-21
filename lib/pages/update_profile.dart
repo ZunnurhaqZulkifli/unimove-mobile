@@ -248,21 +248,18 @@ class _ProfileFormsState extends State<ProfileForms> {
   BaseAppController controller = Get.find();
 
   Map<String, dynamic> student_fields = {
-    'id_number': '',
     'student_id': '',
     'phone': '',
     'address': '',
   };
 
   Map<String, dynamic> staff_fields = {
-    'id_number': '',
     'staff_id': '',
     'phone': '',
     'address': '',
   };
 
   Map<String, dynamic> driver_fields = {
-    'id_number': '',
     'driver_id': '',
     'phone': '',
     'address': '',
@@ -288,7 +285,9 @@ class _ProfileFormsState extends State<ProfileForms> {
     profile = {};
 
     if (widget.type == 'driver') {
+      print('driver');
       setState(() {
+        profile = {};
         profile = driver_fields;
       });
     }
@@ -296,6 +295,7 @@ class _ProfileFormsState extends State<ProfileForms> {
     if (widget.type == 'student') {
       print('student');
       setState(() {
+        profile = {};
         profile = student_fields;
       });
     }
@@ -303,6 +303,7 @@ class _ProfileFormsState extends State<ProfileForms> {
     if (widget.type == 'staff') {
       print('staff');
       setState(() {
+        profile = {};
         profile = staff_fields;
       });
     }
@@ -319,6 +320,10 @@ class _ProfileFormsState extends State<ProfileForms> {
             builder: (context) {
               fields = [];
               for (var item in profile.entries) {
+                // skip the license_expiry and type fields
+                if (item.key == 'license_expiry' || item.key == 'type') {
+                  continue;
+                }
                 fields.add(
                   TextFormField(
                     decoration: InputDecoration(

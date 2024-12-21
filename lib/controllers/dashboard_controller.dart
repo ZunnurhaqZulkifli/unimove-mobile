@@ -7,6 +7,7 @@ import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/pages/home.dart';
 import 'package:unimove/pages/booking.dart';
+import 'package:unimove/pages/order.dart';
 import 'package:unimove/pages/profile.dart';
 import 'package:unimove/pages/unverified_home.dart';
 import 'package:unimove/pages/wallet.dart';
@@ -44,6 +45,11 @@ class DashboardController extends GetxController {
       verifiedDriverPage();
     }
 
+    if (type.value == 'staff' && verified) {
+      print('user type is staff');
+      verifiedStaffPage();
+    }
+
     if (!verified) {
       print('user is unverified');
       unverifiedPage();
@@ -51,6 +57,81 @@ class DashboardController extends GetxController {
   }
 
   void verifiedStudentPage() {
+    pages.clear();
+
+    pages.addAll(
+      [
+        {
+          'title': 'Home',
+          'route': '/home',
+          'page': HomePage(),
+          'tab': BottomNavyBarItem(
+            title: Text('Home'),
+            textAlign: TextAlign.center,
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 1),
+              child: Icon(UniconsLine.home),
+            ),
+            activeColor: ThemeColors.white,
+            inactiveColor: ThemeColors.white,
+          ),
+        },
+        {
+          'title': 'Book',
+          'route': '/book',
+          'page': BookingPage(),
+          'tab': BottomNavyBarItem(
+            title: Text('Book'),
+            textAlign: TextAlign.center,
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 1),
+              child: Icon(UniconsLine.car),
+            ),
+            activeColor: ThemeColors.white,
+            inactiveColor: ThemeColors.white,
+          ),
+        },
+        {
+          'title': 'Wallet',
+          'route': '/wallet',
+          'page': WalletPage(),
+          'tab': BottomNavyBarItem(
+            title: Text('Wallet'),
+            textAlign: TextAlign.center,
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 1),
+              child: Icon(UniconsLine.wallet),
+            ),
+            activeColor: ThemeColors.white,
+            inactiveColor: ThemeColors.white,
+          ),
+        },
+        {
+          'title': 'Profile',
+          'route': '/profile',
+          'page': ProfilePage(),
+          'tab': BottomNavyBarItem(
+            title: Text('Profile'),
+            textAlign: TextAlign.center,
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 1),
+              child: Icon(UniconsLine.user),
+            ),
+            activeColor: ThemeColors.white,
+            inactiveColor: ThemeColors.white,
+          ),
+        },
+      ],
+    );
+
+    if (pages.isNotEmpty) {
+      print('pages are not empty');
+      print(pages.length.toString());
+      isLoaded.value = true;
+    }
+  }
+
+  void verifiedStaffPage() {
     pages.clear();
 
     pages.addAll(
@@ -146,15 +227,15 @@ class DashboardController extends GetxController {
           ),
         },
         {
-          'title': 'Book',
-          'route': '/book',
-          'page': BookingPage(),
+          'title': 'Order',
+          'route': '/order',
+          'page': OrderPage(),
           'tab': BottomNavyBarItem(
-            title: Text('Book'),
+            title: Text('Order'),
             textAlign: TextAlign.center,
             icon: Padding(
               padding: const EdgeInsets.only(left: 1),
-              child: Icon(UniconsLine.car),
+              child: Icon(UniconsLine.location_arrow),
             ),
             activeColor: ThemeColors.white,
             inactiveColor: ThemeColors.white,
