@@ -73,7 +73,7 @@ class _PasscodePageState extends State<PasscodePage> {
       });
 
       if (baseAppController.user!.name == 'Zunnurhaq' ||
-          baseAppController.user!.name == 'System Administrator') {
+          baseAppController.user!.name == 'System Administrator' || baseAppController.user!.name == 'Student 04') {
         Future.delayed(Duration(milliseconds: 400), () {
           passcodeController.text = passcode;
         });

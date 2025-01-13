@@ -1,15 +1,16 @@
 import 'package:get/get.dart';
 import 'package:unimove/api/api.dart';
+import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/order.dart';
 
-class OrderController extends GetxController {
+class DriverOrderController extends GetxController {
   bool isLoaded = false;
   RxList<Order> orders = <Order>[].obs;
-  Order? currentOrder;
+  RxList<Order> myOrders = <Order>[].obs;
+  // BaseAppController baseAppController = Get.find();
 
   Future load() async {
-    print('loading user active order...');
-    await api2.getMyCurrentOrder();
+    await api2.getOrders();
   }
 
   void setModel(List<dynamic> data) {
@@ -34,10 +35,18 @@ class OrderController extends GetxController {
     //
   }
 
-  void clearSettings() {
+  Future acceptOrder(Order? order) async {
+    await api2.acceptOrder(order!.id!);
+
+    baseAppController.hasOrder.value = true;
+  }
+
+  clearSettings() {
     isLoaded = false;
     orders.clear();
-    currentOrder = null;
-    orders.clear();
+  }
+
+  Future getAllOrders() async {
+    await api2.getOrders(); // gets all the orders
   }
 }

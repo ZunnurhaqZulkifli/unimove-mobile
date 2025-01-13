@@ -1,99 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
-import 'package:unimove/controllers/order_controller.dart';
+import 'package:unimove/controllers/driver_order_controller.dart';
+import 'package:unimove/models/order.dart';
 import 'package:unimove/pages/dashboard.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
-class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
-
-  @override
-  State<OrderPage> createState() => _OrderPageState();
-}
-
-OrderController orderController = Get.find();
-BaseAppController controller = Get.find();
-
-class _OrderPageState extends State<OrderPage> {
-  @override
-  void initState() {
-    super.initState();
-    orderController.loadOrders();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Select an order to accept',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            ListBody(
-              children: List.generate(
-                orderController.orders.length,
-                (index) => ListTile(
-                  title: Text(
-                    'From : ' +
-                        controller.destinationController.findDestination(
-                          orderController.orders[index].pickup_from,
-                        ),
-                  ),
-                  subtitle: Text(
-                    'Drop To : ' +
-                        controller.destinationController.findDestination(
-                          orderController.orders[index].dropoff_to,
-                        ),
-                  ),
-                  horizontalTitleGap: 10,
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  leading: Icon(UniconsLine.location_point),
-                  onTap: () {
-                    Get.to(
-                      () => AcceptOrderPage(
-                        orderController: orderController,
-                        order: orderController.orders[index],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
-          ]),
-        ),
-      ),
-    );
-  }
-}
-
-class AcceptOrderPage extends StatefulWidget {
+class AcceptDriverOrderPage extends StatefulWidget {
   final Order order;
-  final OrderController orderController;
+  final DriverOrderController driverOrderController;
 
-  const AcceptOrderPage({
+  const AcceptDriverOrderPage({
     super.key,
     required this.order,
-    required this.orderController,
+    required this.driverOrderController,
   });
 
   @override
-  State<AcceptOrderPage> createState() => _AcceptOrderPageState();
+  State<AcceptDriverOrderPage> createState() => _AcceptDriverOrderPageState();
 }
 
+BaseAppController controller = Get.find();
 ThemeController themeController = Get.find();
 Order? order;
 
-class _AcceptOrderPageState extends State<AcceptOrderPage> {
+class _AcceptDriverOrderPageState extends State<AcceptDriverOrderPage> {
   @override
   void initState() {
     super.initState();
@@ -168,7 +100,7 @@ class _AcceptOrderPageState extends State<AcceptOrderPage> {
         children: [
           ElevatedButton(
             onPressed: () async {
-              await widget.orderController.acceptOrder(order);
+              await widget.driverOrderController.acceptOrder(order);
 
               Future.delayed(Duration(seconds: 2), () {
                 Get.offAll(() => Dashboard());
@@ -193,4 +125,3 @@ class _AcceptOrderPageState extends State<AcceptOrderPage> {
     );
   }
 }
-

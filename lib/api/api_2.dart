@@ -45,7 +45,8 @@ class Api2 extends Api {
     }
   }
 
-  Future getOrders() async {
+  // this gets all the orders
+  Future<RxList<Order>> getOrders() async {
     try {
       var response = await dio.get(
         '$endpoint/api/v1/orders',
@@ -57,10 +58,64 @@ class Api2 extends Api {
       if (response.statusCode == 200) {
         var responseData = response.data['data'];
 
-        controller.orderController.orders.clear();
+        controller.driverOrderController.orders.clear();
 
         for (var item in responseData) {
-          controller.orderController.orders.add(Order.fromJson(item));
+          controller.driverOrderController.orders.add(Order.fromJson(item));
+        }
+
+        return controller.driverOrderController.orders;
+      }
+      return controller.driverOrderController.orders;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+        return controller.driverOrderController.orders;
+      }
+      
+      return controller.driverOrderController.orders;
+
+    } catch (e) {
+      return controller.driverOrderController.orders;
+    }
+  }
+
+  Future getMyOrders() async {
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/my-orders',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'];
+
+        controller.driverOrderController.myOrders.clear();
+
+        if (responseData != null) {
+          for (var item in responseData) {
+            controller.driverOrderController.myOrders.add(Order.fromJson(item));
+          }
+
+          // this checks if the user has orders or nto
+          if (controller.driverOrderController.myOrders.isNotEmpty) {
+            controller.hasOrder.value = true;
+          } else {
+            controller.hasOrder.value = false;
+          }
         }
       }
     } on DioException catch (e) {
@@ -218,7 +273,6 @@ class Api2 extends Api {
       );
 
       if (response.statusCode == 200) {
-        print('booking data is set and gotten');
         controller.setBooking(Booking.fromJson(response.data['data']));
       }
 
@@ -247,6 +301,98 @@ class Api2 extends Api {
     }
 
     return {};
+  }
+
+  Future<bool> checkHasBooking() async {
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/check-has-order',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'];
+
+        if (responseData) {
+          return true;
+        }
+
+        return false;
+      }
+
+      return false;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+
+        Map<String, dynamic> errors = e.response!.data['errors'];
+
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Application Get Error !',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    return false;
+  }
+
+  Future getMyCurrentOrder() async {
+    OrderController controller = Get.find();
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/my-current-order',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'];
+        controller.currentOrder = Order.fromJson(responseData[0]);
+
+        print('current order status is : ${controller.currentOrder!.status}');
+
+        return false;
+      }
+
+      return false;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+
+        Map<String, dynamic> errors = e.response!.data['errors'];
+
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Application Get Error !',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    return false;
   }
 }
 

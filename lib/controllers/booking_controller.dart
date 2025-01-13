@@ -2,32 +2,21 @@ import 'package:get/get.dart';
 import 'package:unimove/api/api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/destination_controller.dart';
-import 'package:unimove/helpers/snackbar_helpers.dart';
+// import 'package:unimove/helpers/snackbar_helpers.dart';
 
 class BookingController extends GetxController {
   RxBool isLoaded = false.obs;
   DestinationController destinationController = Get.find();
-  BaseAppController baseAppController = Get.find();
   List<Booking> booking = [];
 
   Future book({String? drop_off, String? pickup_from}) async {
-    if (baseAppController.user!.wallet!.balance! > 5.00) {
-      print('Booking successful');
 
-      await api2.bookDestination({
-        'pickup_from': pickup_from,
-        'dropoff_to': drop_off,
-      });
+    await api2.bookDestination({
+      'pickup_from': pickup_from,
+      'dropoff_to': drop_off,
+    });
 
-      baseAppController.hasOrder.value = true;
-    } else {
-      print('Insufficient funds');
-
-      topSnackBarAction(
-        title: 'Insufficient Funds',
-        message: 'Please top up your wallet to continue',
-      );
-    }
+    // baseAppController.hasOrder.value = true;
   }
 
   Future getBooking() async {
@@ -35,13 +24,32 @@ class BookingController extends GetxController {
   }
 
   Future setBooking(Booking data) async {
-    print('Setting booking details');
+    print('set booking details');
+
     booking.clear();
     booking.add(data);
 
     isLoaded.value = true;
 
-    print('Booking details set');
+    if(booking.isNotEmpty) {
+      print('booking details set');
+    } else {
+      print('booking details not set');
+    }
+  }
+
+  // need to set to true if user has booking // called user has orders in be
+  Future checkHasBooking() async {
+    if(await api2.checkHasBooking()) {
+
+      print('user has booking');
+      baseAppController.hasOrder.value = true;
+
+    } else {
+
+      print('user has booking');
+      baseAppController.hasOrder.value = false;
+    }
   }
 
   void clearSettings() {
@@ -78,7 +86,7 @@ class Booking {
     accepted_by = json['accepted_by'].toString();
     created_at = json['created_at'].toString();
     updated_at = json['updated_at'].toString();
-    bookingDetails = json['booking_details'] != null
+    bookingDetails = json['booking_details'].toString() != '[]'
         ? BookingDetails.fromJson(json['booking_details'][0])
         : null; // patut tarik data ni once order user dah kene accept
   }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
+import 'package:unimove/models/dashboaed_images.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
@@ -16,6 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   BaseAppController controller = Get.find();
   ThemeController themeController = Get.find();
+  List<DashboardImage> images = [];
+  PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.loadDashboardImages();
+
+    setState(() {
+      images = controller.dashboardController.dashboardImages;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +113,54 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            PhotoCarousel(),
-            QuickIcons(),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  child: CarouselView(
+                      shrinkExtent: 1,
+                      itemExtent: 1.5,
+                      children: List.generate(images.length, (index) {
+                        return Card(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  'https://unimove-be.ngrok.app/' +
+                                      images[index].path!,
+                                ),
+                                fit: BoxFit.fitWidth,
+                              ),
+                            ),
+                          ),
+                        );
+                      })),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SmoothPageIndicator(
+                  controller: pageController,
+                  count: images.length,
+                  axisDirection: Axis.horizontal,
+                  effect: SlideEffect(
+                    spacing: 10,
+                    radius: 10,
+                    dotWidth: 10.0,
+                    dotHeight: 10.0,
+                    paintStyle: PaintingStyle.stroke,
+                    strokeWidth: 0.8,
+                    dotColor: Colors.grey,
+                    activeDotColor: ThemeColors.red3,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

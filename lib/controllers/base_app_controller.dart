@@ -1,6 +1,8 @@
 import 'package:unimove/controllers/biometric_controller.dart';
+import 'package:unimove/controllers/booking_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
 import 'package:unimove/controllers/destination_controller.dart';
+import 'package:unimove/controllers/driver_order_controller.dart';
 import 'package:unimove/controllers/order_controller.dart';
 import 'package:unimove/controllers/wallet_controller.dart';
 import 'package:unimove/helpers/storage.dart';
@@ -15,11 +17,12 @@ class BaseAppController extends GetxController {
   RxString user_type = ''.obs;
   late User? user;
   DashboardController dashboardController = Get.put(DashboardController());
-  DestinationController destinationController =
-      Get.put(DestinationController());
+  DestinationController destinationController = Get.put(DestinationController());
   BiometricController biometricController = Get.put(BiometricController());
-  OrderController orderController = Get.put(OrderController());
+  DriverOrderController driverOrderController = Get.put(DriverOrderController());
+  BookingController bookingController = Get.put(BookingController());
   WalletController walletController = Get.put(WalletController());
+  OrderController orderController = Get.put(OrderController());
 
   RxBool hasOrder = false.obs;
   RxBool waitingRide = false.obs;
@@ -29,6 +32,10 @@ class BaseAppController extends GetxController {
   void onInit() {
     super.onInit();
     getToken();
+  }
+
+  Future loadDashboardImages() async {
+    await api.getDashboardImages();
   }
 
   Future<bool> checkStatus() async {
@@ -61,24 +68,24 @@ class BaseAppController extends GetxController {
   void getProfile() async {
     // clearSettings(); // master reset
 
-    // reference data loaded from the api
-    await destinationController.loadDestinations();
-    await orderController.loadOrders();
-
     if (auth_token.value == '') {
       clearSettings();
       Get.offAll(() => LoginPage());
     }
 
     if (auth_token.value != '') {
+      // await driverOrderController.loadOrders();
+
       if (!await api.profile()) {
         // revalidate the token
         clearSettings();
         Get.offAll(() => LoginPage());
       } else {
         // this redirects user to the biometrics page
-        await biometricController.setupAppBiometrics(
-            user!, dashboardController, this);
+        await biometricController.setupAppBiometrics(user!, dashboardController, this);
+        await destinationController.loadDestinations();
+        await bookingController.checkHasBooking();
+        // await walletController.loadWallet();
       }
     }
   }
@@ -93,7 +100,9 @@ class BaseAppController extends GetxController {
     dashboardController.clearSettings();
     destinationController.clearSettings();
     biometricController.clearSettings();
+    driverOrderController.clearSettings();
     orderController.clearSettings();
+    bookingController.clearSettings();
     hasOrder.value = false;
     waitingRide.value = false;
     onRide.value = false;

@@ -4,10 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
+import 'package:unimove/models/dashboaed_images.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/pages/home.dart';
-import 'package:unimove/pages/booking.dart';
-import 'package:unimove/pages/order.dart';
+import 'package:unimove/pages/booking_page.dart';
+import 'package:unimove/pages/driver_order.dart';
 import 'package:unimove/pages/profile.dart';
 import 'package:unimove/pages/unverified_home.dart';
 import 'package:unimove/pages/wallet.dart';
@@ -20,6 +21,7 @@ class DashboardController extends GetxController {
   late Rx<User> user;
   late BaseAppController controller;
   RxBool isLoaded = true.obs;
+  List<DashboardImage> dashboardImages = [];
 
   void initialize({BaseAppController? controller}) {
     this.controller = controller!;
@@ -229,7 +231,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Order',
           'route': '/order',
-          'page': OrderPage(),
+          'page': DriverOrderPage(),
           'tab': BottomNavyBarItem(
             title: Text('Order'),
             textAlign: TextAlign.center,

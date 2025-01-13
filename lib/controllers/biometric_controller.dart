@@ -61,7 +61,7 @@ class BiometricController extends GetxController {
 
     try {
       authenticated = await auth.authenticate(
-        localizedReason: 'Authenticate to access UniMove',
+        localizedReason: 'Authenticate to access Unimove',
         options: AuthenticationOptions(
           stickyAuth: false,
           sensitiveTransaction: true,
@@ -142,18 +142,24 @@ class BiometricController extends GetxController {
             }
           }
 
-          if (biometric.value.passcode == true && biometric.value.fingerprint == false && biometric.value.face_id == false) {
+          if (biometric.value.passcode == true &&
+              biometric.value.fingerprint == false &&
+              biometric.value.face_id == false) {
             authenticatePasscode();
             dashboardController.initialize(controller: controller);
           }
         } else {
           print('this user is using the passcode');
-          
+
           authenticatePasscode();
           dashboardController.initialize(controller: controller);
         }
       }
     });
+  }
+
+  Future updateBiometric(Map<String, dynamic> data) async {
+    await api.updateBiometric(data);
   }
 
   void clearSettings() {
