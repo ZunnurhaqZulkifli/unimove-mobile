@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unimove/pages/dashboard.dart';
-import 'package:unimove/pages/update_profile.dart';
+import 'package:unimove/pages/authentications/update_profile.dart';
 import 'package:unimove/themes/theme.dart';
 
 Future<dynamic> UpdateProfilePopup() {

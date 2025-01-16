@@ -41,7 +41,7 @@ class _WalletPageState extends State<WalletPage> {
                         color: Colors.white,
                       ),
                       Text(
-                        ' RM ${controller.user!.wallet!.balance!.toStringAsFixed(2)}',
+                        ' RM ${controller.user.value?.wallet!.balance!.toStringAsFixed(2)}',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

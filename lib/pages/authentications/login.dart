@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
-import 'package:unimove/pages/register.dart';
+import 'package:unimove/api/user_api.dart';
+import 'package:unimove/pages/authentications/register.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: Get.width / 2.5,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await api.login(
+                          await authApi.login(
                             email: emailController.text,
                             password: passwordController.text,
                           );

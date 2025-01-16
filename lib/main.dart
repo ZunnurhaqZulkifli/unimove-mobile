@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/pages/splash.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     return Obx(() {
       final ThemeController themeController = Get.find();
       return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Unimove Application',
         theme: themeController.currentTheme,
         home: const SplashScreen(),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/pages/dashboard.dart';
+import 'package:unimove/pages/settings/maintainance_mode.dart';
 import 'package:unimove/themes/theme.dart';
 
 class PasscodePage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _PasscodePageState extends State<PasscodePage> {
     if (passcodeController.text == passcode) {
       topSnackBarInfo(
           title: 'Authentication Successful !',
-          message: 'Welcome back, ' + baseAppController.user!.name!);
+          message: 'Welcome back, ' + baseAppController.user.value!.name!);
 
       Get.offAll(() => Dashboard());
     } else {
@@ -49,7 +50,7 @@ class _PasscodePageState extends State<PasscodePage> {
         'initial': true,
       };
 
-      if (await api.updateBiometric(passcodeData)) {
+      if (await authApi.updateBiometric(passcodeData)) {
         setState(() {
           passcode = passcodeController.text;
           firstTimeSetup = false;
@@ -59,7 +60,7 @@ class _PasscodePageState extends State<PasscodePage> {
   }
 
   void checkUserBiometrics() async {
-    await api.getBiometric();
+    await authApi.getBiometric();
 
     // if the biometric is not enabled, then it should create a passcode (first time setup)
     if (!biometricController.biometric.value.enabled!) {
@@ -72,8 +73,9 @@ class _PasscodePageState extends State<PasscodePage> {
         passcode = biometricController.biometric.value.passcode_number!;
       });
 
-      if (baseAppController.user!.name == 'Zunnurhaq' ||
-          baseAppController.user!.name == 'System Administrator' || baseAppController.user!.name == 'Student 04') {
+      if (baseAppController.user.value!.name == 'Zunnurhaq' ||
+          baseAppController.user.value!.name == 'System Administrator' ||
+          baseAppController.user.value!.name == 'Student 04') {
         Future.delayed(Duration(milliseconds: 400), () {
           passcodeController.text = passcode;
         });
@@ -95,7 +97,10 @@ class _PasscodePageState extends State<PasscodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Enter Passcode'),
+        title: Text(
+          'Enter Passcode',
+          style: themeController.currentTheme.textTheme.displayLarge,
+        ),
       ),
       body: Center(
         child: Column(

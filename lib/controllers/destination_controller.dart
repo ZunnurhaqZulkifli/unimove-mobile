@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/models/destination.dart';
 
 class DestinationController extends GetxController {
@@ -7,7 +7,7 @@ class DestinationController extends GetxController {
   RxList<Destination> destinations = <Destination>[].obs;
 
   Future loadDestinations() async {
-    await api.getDestinations();
+    await userApi.getDestinations();
   }
 
   void setDestinationsModel(List<dynamic> data) {

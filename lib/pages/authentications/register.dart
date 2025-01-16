@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:unicons/unicons.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/helpers/string_helpers.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/themes/theme.dart';
@@ -216,7 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             message: 'Name and Email is required');
                         return;
                       } else {
-                        var tacData = await api.requestTac(
+                        var tacData = await authApi.requestTac(
                           name: nameController.text,
                           email: emailController.text,
                         );
@@ -249,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     (!isTacValid)
                         ? topSnackBarAction(
                             title: 'Error', message: 'TAC Number is required')
-                        : await api.register(
+                        : await authApi.register(
                             name: nameController.text,
                             email: emailController.text,
                             username: usernameController.text,

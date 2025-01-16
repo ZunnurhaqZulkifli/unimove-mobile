@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unicons/unicons.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
@@ -211,7 +211,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   profileData['type'] = user_type;
                   print(profileData);
 
-                  await api.updateProfile(profileData);
+                  await userApi.updateProfile(profileData);
                 } else {
                   setState(() {
                     user_type = '';

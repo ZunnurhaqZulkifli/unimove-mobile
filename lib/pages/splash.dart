@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
         if (!status) {
           return;
         } else {
-          controller.getProfile();
+          controller.loadProfile();
         }
       });
     });

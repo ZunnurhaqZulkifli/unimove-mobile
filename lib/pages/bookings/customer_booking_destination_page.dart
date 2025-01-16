@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
-import 'package:unimove/controllers/booking_controller.dart';
+import 'package:unimove/controllers/customer_booking_controller.dart';
 import 'package:unimove/models/destination.dart';
 import 'package:unimove/pages/dashboard.dart';
 import 'package:unimove/themes/theme.dart';
@@ -22,7 +22,7 @@ class BookingDestination extends StatefulWidget {
   State<BookingDestination> createState() => _BookingDestinationState();
 }
 
-BookingController bookingController = Get.find();
+CustomerBookingController bookingController = Get.find();
 ThemeController themeController = Get.find();
 Map<String, dynamic> calculated_data = {};
 bool is_expanded = false;
@@ -34,7 +34,6 @@ class _BookingDestinationState extends State<BookingDestination> {
   @override
   void initState() {
     super.initState();
-    print('Destination: ${widget.destination.name}');
 
     setState(() {
       calculated_data = {};
@@ -56,16 +55,17 @@ class _BookingDestinationState extends State<BookingDestination> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only( top : 110.0),
+            padding: const EdgeInsets.only(top: 110.0),
             child: Container(
               height: 200,
               width: Get.width,
               decoration: BoxDecoration(
                 color: ThemeColors.primary1,
                 image: DecorationImage(
-                    image: NetworkImage('https://unimove.test/' + widget.destination.image_l!),
-                    fit: BoxFit.cover,
-                  ),
+                  image: NetworkImage(
+                      'https://unimove.test/' + widget.destination.image_l!),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -77,7 +77,7 @@ class _BookingDestinationState extends State<BookingDestination> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
-                  if(selectedPickup != null)
+                  if (selectedPickup != null)
                     ExpansionPanelList(
                       expansionCallback: (panelIndex, isExpanded) {
                         setState(() {
@@ -90,11 +90,13 @@ class _BookingDestinationState extends State<BookingDestination> {
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           canTapOnHeader: true,
-                          backgroundColor: const Color.fromARGB(255, 41, 41, 41),
+                          backgroundColor:
+                              const Color.fromARGB(255, 41, 41, 41),
                           isExpanded: is_expanded,
                           headerBuilder: (context, isExpanded) {
                             return ListTile(
-                              title: Text('Pickup From : ${bookingController.destinationController.findDestination(selectedPickup)}'),
+                              title: Text(
+                                  'Drop Off To : ${bookingController.destinationController.findDestination(selectedPickup)}'),
                             );
                           },
                           body: Padding(
@@ -104,7 +106,7 @@ class _BookingDestinationState extends State<BookingDestination> {
                                 Container(
                                   width: Get.width,
                                   child: Text(
-                                    'Pickup From :',
+                                    'Drop Off To :',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       color: ThemeColors.white,
@@ -121,18 +123,22 @@ class _BookingDestinationState extends State<BookingDestination> {
                                     color: ThemeColors.primary1,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                        image: NetworkImage('https://unimove.test/' +
-                                            bookingController
-                                                .destinationController.destinations
-                                                .where(
-                                                  (e) =>
-                                                      e.id.toString().toLowerCase() ==
-                                                      selectedPickup
-                                                          .toString()
-                                                          .toLowerCase(),
-                                                )
-                                                .elementAt(0)
-                                                .image_l!),
+                                        image: NetworkImage(
+                                            'https://unimove.test/' +
+                                                bookingController
+                                                    .destinationController
+                                                    .destinations
+                                                    .where(
+                                                      (e) =>
+                                                          e.id
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          selectedPickup
+                                                              .toString()
+                                                              .toLowerCase(),
+                                                    )
+                                                    .elementAt(0)
+                                                    .image_l!),
                                         fit: BoxFit.cover),
                                   ),
                                 ),
@@ -148,7 +154,7 @@ class _BookingDestinationState extends State<BookingDestination> {
                   Container(
                     width: Get.width,
                     child: Text(
-                      'Pickup From :',
+                      'Drop Off To :',
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -162,16 +168,17 @@ class _BookingDestinationState extends State<BookingDestination> {
                         fontSize: 13,
                       ),
                       isExpanded: true,
-                      hint: Text('Pickup From'),
+                      hint: Text('Drop Off To'),
                       value: selectedPickup,
-                      // dropdownColor: Colors.white,
                       isDense: false,
                       items: List.generate(
                         bookingController.destinationController.destinations
                             .where(
                               (e) =>
                                   e.name.toString().toLowerCase() !=
-                                  widget.destination.name!.toString().toLowerCase(),
+                                  widget.destination.name!
+                                      .toString()
+                                      .toLowerCase(),
                             )
                             .length,
                         (index) => DropdownMenuItem(
@@ -187,21 +194,21 @@ class _BookingDestinationState extends State<BookingDestination> {
                                 .elementAt(index)
                                 .name!,
                           ),
-                          value:
-                              bookingController.destinationController.destinations
-                                  .where(
-                                    (e) =>
-                                        e.name.toString().toLowerCase() !=
-                                        widget.destination.name!
-                                            .toString()
-                                            .toLowerCase(),
-                                  )
-                                  .elementAt(index)
-                                  .id!,
+                          value: bookingController
+                              .destinationController.destinations
+                              .where(
+                                (e) =>
+                                    e.name.toString().toLowerCase() !=
+                                    widget.destination.name!
+                                        .toString()
+                                        .toLowerCase(),
+                              )
+                              .elementAt(index)
+                              .id!,
                         ),
                       ),
                       onChanged: (value) async {
-                        calculated_data = await api2.calculateData(
+                        calculated_data = await customerApi.calculateData(
                           value.toString(),
                           dropOff,
                         );
@@ -256,7 +263,6 @@ class _BookingDestinationState extends State<BookingDestination> {
           ),
         ],
       ),
-      
       floatingActionButton: OverflowBar(
         children: [
           ElevatedButton(

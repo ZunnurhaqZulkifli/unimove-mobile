@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
-import 'package:unimove/pages/settings.dart';
+import 'package:unimove/pages/settings/settings.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    userType = controller.user!.type.toString().toLowerCase();
+    userType = controller.user.value!.type.toString().toLowerCase();
     super.initState();
   }
 
@@ -44,12 +44,13 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               ListTile(
                 title: Text('Name'),
-                subtitle: Text(controller.user!.name ?? ''),
+                subtitle: Text(controller.user.value!.name ?? ''),
                 visualDensity: VisualDensity.compact,
               ),
               ListTile(
                 title: Text('Profile Type'),
-                subtitle: Text(controller.user!.type.toString().toUpperCase()),
+                subtitle:
+                    Text(controller.user.value!.type.toString().toUpperCase()),
                 visualDensity: VisualDensity.compact,
               ),
               if (userType == 'student') StudentFields(controller: controller),
@@ -85,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () async {
-              await api.logout();
+              await authApi.logout();
             },
             child: Text(
               'Logout',
@@ -114,33 +115,33 @@ class StudentFields extends StatelessWidget {
       children: [
         ListTile(
           title: Text('Student Id'),
-          subtitle: Text(controller.user!.profile!.student_id ?? ''),
+          subtitle: Text(controller.user.value!.profile!.student_id ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('address'),
-          subtitle: Text(controller.user!.profile!.address ?? ''),
+          subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('name'),
-          subtitle: Text(controller.user!.profile!.name ?? ''),
+          subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('phone'),
-          subtitle: Text(controller.user!.profile!.phone ?? ''),
+          subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('status'),
-          subtitle: Text(controller.user!.profile!.status ?? ''),
+          subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('verified'),
           subtitle: Text(
-            controller.user!.profile!.verified.toString(),
+            controller.user.value!.profile!.verified.toString(),
           ),
           visualDensity: VisualDensity.compact,
         ),
@@ -159,33 +160,33 @@ class DriverFields extends StatelessWidget {
       children: [
         ListTile(
           title: Text('Student Id'),
-          subtitle: Text(controller.user!.profile!.student_id ?? ''),
+          subtitle: Text(controller.user.value!.profile!.student_id ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('address'),
-          subtitle: Text(controller.user!.profile!.address ?? ''),
+          subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('name'),
-          subtitle: Text(controller.user!.profile!.name ?? ''),
+          subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('phone'),
-          subtitle: Text(controller.user!.profile!.phone ?? ''),
+          subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('status'),
-          subtitle: Text(controller.user!.profile!.status ?? ''),
+          subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('verified'),
           subtitle: Text(
-            controller.user!.profile!.verified.toString(),
+            controller.user.value!.profile!.verified.toString(),
           ),
           visualDensity: VisualDensity.compact,
         ),
@@ -204,33 +205,33 @@ class StaffFields extends StatelessWidget {
       children: [
         ListTile(
           title: Text('Student Id'),
-          subtitle: Text(controller.user!.profile!.student_id ?? ''),
+          subtitle: Text(controller.user.value!.profile!.student_id ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('address'),
-          subtitle: Text(controller.user!.profile!.address ?? ''),
+          subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('name'),
-          subtitle: Text(controller.user!.profile!.name ?? ''),
+          subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('phone'),
-          subtitle: Text(controller.user!.profile!.phone ?? ''),
+          subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('status'),
-          subtitle: Text(controller.user!.profile!.status ?? ''),
+          subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
           title: Text('verified'),
           subtitle: Text(
-            controller.user!.profile!.verified.toString(),
+            controller.user.value!.profile!.verified.toString(),
           ),
           visualDensity: VisualDensity.compact,
         ),

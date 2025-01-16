@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 
 class WalletController extends GetxController {
   var balance = 0.0.obs;
 
   void loadWallet() async {
-    await api2.getWallet();
+    await customerApi.getWallet();
   }
 
   void topUpWallet(double amount) async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:unicons/unicons.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/dashboaed_images.dart';
 import 'package:unimove/themes/theme.dart';
@@ -23,11 +24,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    controller.loadDashboardImages();
 
     setState(() {
       images = controller.dashboardController.dashboardImages;
     });
+
+    loadWallets();
+  }
+
+  void loadWallets() async {
+    await userApi.getWallet();
   }
 
   @override
@@ -41,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Hi ${controller.user!.name},',
+                  'Hi ${controller.user.value?.name},',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -59,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                             ),
                             Text(
-                              ' RM ${controller.user!.wallet!.balance!.toStringAsFixed(2)}',
+                              ' RM ${controller.user.value?.wallet!.balance!.toStringAsFixed(2)}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -113,150 +119,57 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  child: CarouselView(
-                      shrinkExtent: 1,
-                      itemExtent: 1.5,
-                      children: List.generate(images.length, (index) {
-                        return Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://unimove-be.ngrok.app/' +
-                                      images[index].path!,
-                                ),
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              height: 200,
+              child: PageView(
+                controller: pageController,
+                children: List.generate(images.length, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Container(
+                      width: double.infinity - 20,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            Uri.parse(
+                              ENDPOINT + '/' + images[index].path.toString(),
+                            ).toString(),
                           ),
-                        );
-                      })),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SmoothPageIndicator(
-                  controller: pageController,
-                  count: images.length,
-                  axisDirection: Axis.horizontal,
-                  effect: SlideEffect(
-                    spacing: 10,
-                    radius: 10,
-                    dotWidth: 10.0,
-                    dotHeight: 10.0,
-                    paintStyle: PaintingStyle.stroke,
-                    strokeWidth: 0.8,
-                    dotColor: Colors.grey,
-                    activeDotColor: ThemeColors.red3,
-                  ),
-                ),
-              ],
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SmoothPageIndicator(
+              controller: pageController,
+              count: images.length,
+              axisDirection: Axis.horizontal,
+              effect: SlideEffect(
+                spacing: 10,
+                radius: 10,
+                dotWidth: 10.0,
+                dotHeight: 10.0,
+                paintStyle: PaintingStyle.stroke,
+                strokeWidth: 0.8,
+                dotColor: Colors.grey,
+                activeDotColor: ThemeColors.red3,
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class PhotoCarousel extends StatefulWidget {
-  const PhotoCarousel({super.key});
-
-  @override
-  PhotoCarouselState createState() => PhotoCarouselState();
-}
-
-class PhotoCarouselState extends State<PhotoCarousel> {
-  PageController pageController = PageController();
-
-  List<Widget> photoWidgets = [
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-    Card(
-      color: ThemeColors.primary1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(
-              Radius.circular(100),
-            ),
-          ),
-          width: double.infinity,
-          height: 230,
-          child: PageView(
-            controller: pageController,
-            children: photoWidgets,
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        SmoothPageIndicator(
-          controller: pageController,
-          count: 6,
-          axisDirection: Axis.horizontal,
-          effect: SlideEffect(
-            spacing: 10,
-            radius: 10,
-            dotWidth: 10.0,
-            dotHeight: 10.0,
-            paintStyle: PaintingStyle.stroke,
-            strokeWidth: 0.8,
-            dotColor: Colors.grey,
-            activeDotColor: ThemeColors.red3,
-          ),
-        ),
-      ],
     );
   }
 }

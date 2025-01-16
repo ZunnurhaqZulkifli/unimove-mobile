@@ -7,11 +7,11 @@ import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/dashboaed_images.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/pages/home.dart';
-import 'package:unimove/pages/booking_page.dart';
-import 'package:unimove/pages/driver_order.dart';
-import 'package:unimove/pages/profile.dart';
+import 'package:unimove/pages/bookings/customer_booking_page.dart';
+import 'package:unimove/pages/orders/driver_order.dart';
+import 'package:unimove/pages/users/profile.dart';
 import 'package:unimove/pages/unverified_home.dart';
-import 'package:unimove/pages/wallet.dart';
+import 'package:unimove/pages/users/wallet.dart';
 import 'package:unimove/themes/theme.dart';
 
 class DashboardController extends GetxController {
@@ -26,10 +26,10 @@ class DashboardController extends GetxController {
   void initialize({BaseAppController? controller}) {
     this.controller = controller!;
 
-    user = controller.user!.obs;
+    user = controller.user.value!.obs;
     type.value = user.value.type!;
 
-    verified = controller.user!.verified;
+    verified = controller.user.value!.verified;
 
     setRoutes();
   }
@@ -81,7 +81,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Book',
           'route': '/book',
-          'page': BookingPage(),
+          'page': CustomerBookingPage(),
           'tab': BottomNavyBarItem(
             title: Text('Book'),
             textAlign: TextAlign.center,
@@ -156,7 +156,7 @@ class DashboardController extends GetxController {
         {
           'title': 'Book',
           'route': '/book',
-          'page': BookingPage(),
+          'page': CustomerBookingPage(),
           'tab': BottomNavyBarItem(
             title: Text('Book'),
             textAlign: TextAlign.center,

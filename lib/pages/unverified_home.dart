@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unimove/pages/home.dart';
 
 class UnverifiedHomePage extends StatefulWidget {
   const UnverifiedHomePage({super.key});
@@ -17,7 +16,7 @@ class _UnverifiedHomePageState extends State<UnverifiedHomePage> {
         child: Column(
           children: [
             Text('Welcome To Your Home'),
-            PhotoCarousel(),
+            // PhotoCarousel(),
           ],
         ),
       ),

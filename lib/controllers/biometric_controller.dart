@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/types/auth_messages_ios.dart';
-import 'package:unimove/api/api.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
 import 'package:unimove/helpers/dialog_helpers.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/models/user.dart';
-import 'package:unimove/pages/passcode_page.dart';
+import 'package:unimove/pages/authentications/passcode_page.dart';
 import 'package:unimove/pages/dashboard.dart';
 
 class Biometric {
@@ -92,7 +92,7 @@ class BiometricController extends GetxController {
 
   Future setupAppBiometrics(User user, DashboardController dashboardController,
       BaseAppController controller) async {
-    biometric.value = await api.getBiometric(); // get the user's biometric
+    biometric.value = await authApi.getBiometric(); // get the user's biometric
 
     Future.delayed(Duration(milliseconds: 600), () async {
       if (user.type == '') {
@@ -159,7 +159,7 @@ class BiometricController extends GetxController {
   }
 
   Future updateBiometric(Map<String, dynamic> data) async {
-    await api.updateBiometric(data);
+    await authApi.updateBiometric(data);
   }
 
   void clearSettings() {
