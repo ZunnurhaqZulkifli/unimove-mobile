@@ -11,13 +11,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
-    final ThemeController themeController = Get.find();
-    final BiometricController biometricController = Get.find();
-    bool? face_id;
-    bool? fingerprint;
-    bool? passcode;
-    String? passcode_number;
+  final ThemeController themeController = Get.find();
+  final BiometricController biometricController = Get.find();
+  bool? face_id;
+  bool? fingerprint;
+  bool? passcode;
+  String? passcode_number;
 
   @override
   void initState() {
@@ -51,10 +50,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
-                      child: Text('Biometric Authentication', style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                      )),
+                      child: Text('Biometric Authentication',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   SwitchListTile(
@@ -63,7 +61,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     value: themeController.isDarkTheme.value,
                     onChanged: (bool value) {
                       setState(() {
-                        themeController.toggleTheme(); // Toggle theme on switch change
+                        themeController
+                            .toggleTheme(); // Toggle theme on switch change
                       });
                     },
                   ),
@@ -71,10 +70,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40, bottom: 10),
-                      child: Text('Biometric Authentication', style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold
-                      )),
+                      child: Text(
+                        'Biometric Authentication',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                   SwitchListTile(
@@ -83,13 +85,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     value: biometricController.biometric.value.face_id!,
                     onChanged: (bool value) {
                       setState(() {
-                        if(biometricController.biometric.value.passcode == true || biometricController.biometric.value.fingerprint == true) {
-                          // biometricController.biometric.value.passcode = false;
-                          biometricController.biometric.value.fingerprint = false;
+                        if (value) {
+                          print('value passcode');
+                          biometricController.biometric.value.fingerprint =
+                              false;
                           biometricController.biometric.value.face_id = value;
                           biometricController.updateBiometric({
                             'type': 'face_id',
-                          }); 
+                          });
+                        } else {
+                          biometricController.biometric.value.fingerprint =
+                              false;
+                          biometricController.biometric.value.face_id = value;
+                          biometricController.updateBiometric({
+                            'type': 'passcode',
+                          });
                         }
                       });
                     },
@@ -100,12 +110,19 @@ class _SettingsPageState extends State<SettingsPage> {
                     value: biometricController.biometric.value.fingerprint!,
                     onChanged: (bool value) {
                       setState(() {
-                        if(biometricController.biometric.value.passcode == true || biometricController.biometric.value.face_id == true) {
-                          biometricController.biometric.value.passcode = false;
+                        if (value) {
                           biometricController.biometric.value.face_id = false;
-                          biometricController.biometric.value.fingerprint = value;
+                          biometricController.biometric.value.fingerprint =
+                              value;
                           biometricController.updateBiometric({
                             'type': 'fingerprint',
+                          });
+                        } else {
+                          biometricController.biometric.value.fingerprint =
+                              value;
+                          biometricController.biometric.value.face_id = true;
+                          biometricController.updateBiometric({
+                            'type': 'passcode',
                           });
                         }
                       });
@@ -117,14 +134,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     value: biometricController.biometric.value.passcode!,
                     onChanged: (bool value) {
                       setState(() {
-                        if(biometricController.biometric.value.face_id == true || biometricController.biometric.value.fingerprint == true) {
-                          biometricController.biometric.value.face_id = false;
-                          biometricController.biometric.value.fingerprint = false;
-                          biometricController.biometric.value.passcode = value;
-                          biometricController.updateBiometric({
-                            'type': 'passcode',
-                          });
-                        }
+                        biometricController.biometric.value.face_id = false;
+                        biometricController.biometric.value.fingerprint = false;
+                        biometricController.biometric.value.passcode = true;
+                        biometricController.updateBiometric({
+                          'type': 'passcode',
+                        });
                       });
                     },
                   ),

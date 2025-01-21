@@ -230,6 +230,44 @@ class Api {
       print(e);
     }
   }
+
+  Future getHistory() async {
+    print('loading user history...');
+    try {
+      var response = await dio.get(
+        '$endpoint/api/v1/ride-histories',
+        options: Options(
+          headers: headers(),
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        controller.historyBookings.clear();
+        var responseData = response.data['data'];
+
+        for (var data in responseData) {
+          controller.historyBookings.add(Booking.fromJson(data));
+        }
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 final userApi = Api();

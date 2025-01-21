@@ -3,6 +3,7 @@ class Profile {
   String? id;
   String? id_number;
   String? student_id;
+  String? driver_id;
   String? avatar;
   String? address;
   String? name;
@@ -16,6 +17,7 @@ class Profile {
     required this.id,
     required this.id_number,
     required this.student_id,
+    required this.driver_id,
     required this.avatar,
     required this.address,
     required this.name,
@@ -30,6 +32,7 @@ class Profile {
     id = json['id'].toString();
     id_number = json['id_number'] ?? '';
     student_id = json['student_id'].toString();
+    driver_id = json['driver_id'].toString();
     avatar = json['avatar'] ?? '';
     address = json['address'] ?? '';
     name = json['name'] ?? '';

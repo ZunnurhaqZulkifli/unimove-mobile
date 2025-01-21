@@ -1,8 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/dashboard_controller.dart';
+import 'package:unimove/pages/notifications_page.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
@@ -47,6 +49,23 @@ class _DashboardState extends State<Dashboard> {
                   controller.pages[current_index]['title'].toString(),
                   style: themeController.currentTheme.textTheme.displayLarge,
                 ),
+                actions: [
+                  controller.pages[current_index]['title'].toString() == 'Home'
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: IconButton(
+                            icon: Icon(
+                              UniconsLine.bell,
+                              color: ThemeColors.white,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              Get.to(() => NotificationsPage());
+                            },
+                          ),
+                        )
+                      : SizedBox(),
+                ],
               ),
               body: SizedBox.expand(
                 child: PageView(

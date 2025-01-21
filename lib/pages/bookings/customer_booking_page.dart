@@ -4,7 +4,6 @@ import 'package:unimove/pages/bookings/customer_active_booking_page.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
 import 'package:get/get.dart';
 
 class CustomerBookingPage extends StatefulWidget {
@@ -45,44 +44,74 @@ class _CustomerBookingPageState extends State<CustomerBookingPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      // if (controller.destinationController.destinations.isNotEmpty)
-                      Column(
-                        children: controller.destinationController.destinations
-                            .map(
-                              (destination) => ListTile(
-                                style: ListTileStyle.drawer,
-                                visualDensity: VisualDensity(
-                                  horizontal: 1,
-                                  vertical: 2,
+                      ListBody(
+                        children: List.generate(
+                          controller.destinationController.destinations.length,
+                          (index) => InkWell(
+                            onTap: () {
+                              Get.to(
+                                () => BookingDestination(
+                                  appController: controller,
+                                  destination: controller.destinationController
+                                      .destinations[index],
                                 ),
-                                dense: true,
-                                title: Text(
-                                  destination.name!,
-                                  style: TextStyle(
-                                    color: ThemeColors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              );
+                            },
+                            child: Container(
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                subtitle: Text(
-                                  '~ RM ' + destination.price!,
-                                  style: TextStyle(
-                                    color: ThemeColors.primary1,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                trailing: Icon(
-                                  size: 30,
-                                  UniconsLine.arrow_right,
-                                ),
-                                onTap: () => Get.to(
-                                  () => BookingDestination(
-                                    appController: controller,
-                                    destination: destination,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              controller.destinationController
+                                                  .destinations[index].name!,
+                                              style: TextStyle(
+                                                color: ThemeColors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              '~ RM ' +
+                                                  controller
+                                                      .destinationController
+                                                      .destinations[index]
+                                                      .price!,
+                                              style: TextStyle(
+                                                color: ThemeColors.black100,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        ' > ',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            )
-                            .toList(),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),

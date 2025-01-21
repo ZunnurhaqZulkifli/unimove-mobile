@@ -11,7 +11,7 @@ import 'package:unimove/pages/bookings/customer_booking_page.dart';
 import 'package:unimove/pages/orders/driver_order.dart';
 import 'package:unimove/pages/users/profile.dart';
 import 'package:unimove/pages/unverified_home.dart';
-import 'package:unimove/pages/users/wallet.dart';
+import 'package:unimove/pages/users/ride_history_page.dart';
 import 'package:unimove/themes/theme.dart';
 
 class DashboardController extends GetxController {
@@ -94,15 +94,15 @@ class DashboardController extends GetxController {
           ),
         },
         {
-          'title': 'Wallet',
-          'route': '/wallet',
-          'page': WalletPage(),
+          'title': 'History',
+          'route': '/history',
+          'page': RideHistoryPage(),
           'tab': BottomNavyBarItem(
-            title: Text('Wallet'),
+            title: Text('History'),
             textAlign: TextAlign.center,
             icon: Padding(
               padding: const EdgeInsets.only(left: 1),
-              child: Icon(UniconsLine.wallet),
+              child: Icon(UniconsLine.history),
             ),
             activeColor: ThemeColors.white,
             inactiveColor: ThemeColors.white,
@@ -169,15 +169,15 @@ class DashboardController extends GetxController {
           ),
         },
         {
-          'title': 'Wallet',
-          'route': '/wallet',
-          'page': WalletPage(),
+          'title': 'History',
+          'route': '/history',
+          'page': RideHistoryPage(),
           'tab': BottomNavyBarItem(
-            title: Text('Wallet'),
+            title: Text('History'),
             textAlign: TextAlign.center,
             icon: Padding(
               padding: const EdgeInsets.only(left: 1),
-              child: Icon(UniconsLine.wallet),
+              child: Icon(UniconsLine.history),
             ),
             activeColor: ThemeColors.white,
             inactiveColor: ThemeColors.white,
@@ -244,15 +244,15 @@ class DashboardController extends GetxController {
           ),
         },
         {
-          'title': 'Wallet',
-          'route': '/wallet',
-          'page': WalletPage(),
+          'title': 'History',
+          'route': '/history',
+          'page': RideHistoryPage(),
           'tab': BottomNavyBarItem(
-            title: Text('Wallet'),
+            title: Text('History'),
             textAlign: TextAlign.center,
             icon: Padding(
               padding: const EdgeInsets.only(left: 1),
-              child: Icon(UniconsLine.wallet),
+              child: Icon(UniconsLine.history),
             ),
             activeColor: ThemeColors.white,
             inactiveColor: ThemeColors.white,

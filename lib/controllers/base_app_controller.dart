@@ -40,6 +40,10 @@ class BaseAppController extends GetxController {
   CustomerOrderController customerOrderController =
       Get.put(CustomerOrderController());
 
+  List<Booking> historyBookings = [];
+
+  RxBool historyBookingsLoaded = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -114,6 +118,7 @@ class BaseAppController extends GetxController {
     user = Rxn<User>();
     auth_token.value = '';
     user_type.value = '';
+    historyBookings = [];
     // storage.erase(); // clear all storage
     storage.write('token', '');
     dashboardController.clearSettings();

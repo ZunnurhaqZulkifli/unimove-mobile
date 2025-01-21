@@ -35,6 +35,7 @@ class _AcceptDriverOrderPageState extends State<AcceptDriverOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
           'Accept Order',
@@ -48,9 +49,9 @@ class _AcceptDriverOrderPageState extends State<AcceptDriverOrderPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Accept Order'),
+              Text('Accept This Order ?'),
               Container(
-                width: 300,
+                width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

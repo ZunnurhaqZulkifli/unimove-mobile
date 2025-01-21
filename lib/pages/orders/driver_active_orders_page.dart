@@ -92,6 +92,9 @@ class _ActiveDriverPageState extends State<ActiveDriverPage> {
                             BookingDetailsCard(
                               booking: booking,
                             ),
+                          SizedBox(
+                            height: 5,
+                          ),
                           OrderDetailButtonsDriver(booking: booking),
                         ],
                       )

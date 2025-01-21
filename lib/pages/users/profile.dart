@@ -28,19 +28,20 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(
-          20.0,
-        ),
+        padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Text(
-                'Profile',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.start,
+                controller.user.value!.type.toString().toLowerCase() ==
+                        'student'
+                    ? '👨🏼‍🎓'
+                    : controller.user.value!.type.toString().toLowerCase() ==
+                            'driver'
+                        ? '🚘'
+                        : '👨🏼‍ 💼',
+                // style: themeController.currentTheme.textTheme.displayLarge,
+                style: TextStyle(fontSize: 50),
               ),
               ListTile(
                 title: Text('Name'),
@@ -56,16 +57,6 @@ class _ProfilePageState extends State<ProfilePage> {
               if (userType == 'student') StudentFields(controller: controller),
               if (userType == 'driver') DriverFields(controller: controller),
               if (userType == 'staff') StaffFields(controller: controller),
-              ListTile(
-                visualDensity: VisualDensity.compact,
-                title: Text('Destination Settings'),
-                onTap: () {
-                  Get.to(
-                    () => SettingsPage(),
-                  );
-                },
-                trailing: Icon(Icons.arrow_forward_ios),
-              ),
               ListTile(
                 visualDensity: VisualDensity.compact,
                 title: Text('App Settings'),
@@ -92,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
               'Logout',
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.amber[800],
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -119,27 +110,27 @@ class StudentFields extends StatelessWidget {
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('address'),
+          title: Text('Address'),
           subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('name'),
+          title: Text('Name'),
           subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('phone'),
+          title: Text('Phone'),
           subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('status'),
+          title: Text('Status'),
           subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('verified'),
+          title: Text('Verified'),
           subtitle: Text(
             controller.user.value!.profile!.verified.toString(),
           ),
@@ -159,32 +150,32 @@ class DriverFields extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text('Student Id'),
-          subtitle: Text(controller.user.value!.profile!.student_id ?? ''),
+          title: Text('Uniten Id'),
+          subtitle: Text(controller.user.value!.profile!.driver_id ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('address'),
+          title: Text('Address'),
           subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('name'),
+          title: Text('Name'),
           subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('phone'),
+          title: Text('Phone'),
           subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('status'),
+          title: Text('Status'),
           subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('verified'),
+          title: Text('Verified'),
           subtitle: Text(
             controller.user.value!.profile!.verified.toString(),
           ),
@@ -209,27 +200,27 @@ class StaffFields extends StatelessWidget {
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('address'),
+          title: Text('Address'),
           subtitle: Text(controller.user.value!.profile!.address ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('name'),
+          title: Text('Name'),
           subtitle: Text(controller.user.value!.profile!.name ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('phone'),
+          title: Text('Phone'),
           subtitle: Text(controller.user.value!.profile!.phone ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('status'),
+          title: Text('Status'),
           subtitle: Text(controller.user.value!.profile!.status ?? ''),
           visualDensity: VisualDensity.compact,
         ),
         ListTile(
-          title: Text('verified'),
+          title: Text('Verified'),
           subtitle: Text(
             controller.user.value!.profile!.verified.toString(),
           ),

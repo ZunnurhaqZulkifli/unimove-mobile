@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:unicons/unicons.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/driver_order_controller.dart';
 import 'package:unimove/models/order.dart';
@@ -47,7 +46,7 @@ class _DriverOrderPageState extends State<DriverOrderPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Select an order to accept',
+                                'Select an order to accept 📍 🙋',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
@@ -55,45 +54,96 @@ class _DriverOrderPageState extends State<DriverOrderPage> {
                               ),
                               ListBody(
                                 children: List.generate(
-                                  driverOrderController.pendingOrders.length,
-                                  (index) => ListTile(
-                                    title: Text(
-                                      'From : ' +
-                                          controller.destinationController
-                                              .findDestination(
-                                            driverOrderController
-                                                .pendingOrders[index]
-                                                .pickup_from,
+                                    driverOrderController.pendingOrders.length,
+                                    (index) => InkWell(
+                                          onTap: () {
+                                            Get.to(
+                                              () => AcceptDriverOrderPage(
+                                                driverOrderController:
+                                                    driverOrderController,
+                                                order: driverOrderController
+                                                    .pendingOrders[index],
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(5),
+                                            height: 100,
+                                            width: double.infinity,
+                                            child: Card(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'From : ' +
+                                                              controller
+                                                                  .destinationController
+                                                                  .findDestination(
+                                                                driverOrderController
+                                                                    .pendingOrders[
+                                                                        index]
+                                                                    .pickup_from,
+                                                              ),
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          'Drop To : ' +
+                                                              controller
+                                                                  .destinationController
+                                                                  .findDestination(
+                                                                driverOrderController
+                                                                    .pendingOrders[
+                                                                        index]
+                                                                    .dropoff_to,
+                                                              ),
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Spacer(),
+                                                    Text(
+                                                      ' > ',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 25,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                    ),
-                                    subtitle: Text(
-                                      'Drop To : ' +
-                                          controller.destinationController
-                                              .findDestination(
-                                            driverOrderController
-                                                .pendingOrders[index]
-                                                .dropoff_to,
-                                          ),
-                                    ),
-                                    horizontalTitleGap: 10,
-                                    trailing: Icon(Icons.arrow_forward_ios),
-                                    leading: Icon(UniconsLine.location_point),
-                                    onTap: () {
-                                      Get.to(
-                                        () => AcceptDriverOrderPage(
-                                          driverOrderController:
-                                              driverOrderController,
-                                          order: driverOrderController
-                                              .pendingOrders[index],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                        )),
                               )
                             ]),
                       )
-                    : Container(),
+                    : Container(
+                        child: Center(
+                          child: Text('No Orders Available. 🥲'),
+                        ),
+                      ),
           )),
     );
   }

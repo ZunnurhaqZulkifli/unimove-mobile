@@ -5,6 +5,7 @@ import 'package:unicons/unicons.dart';
 import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/models/dashboaed_images.dart';
+import 'package:unimove/pages/cms-content.dart';
 import 'package:unimove/themes/theme.dart';
 import 'package:unimove/themes/theme_controller.dart';
 
@@ -47,7 +48,11 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Hi ${controller.user.value?.name},',
+                  'Hi , ' +
+                      (controller.user.value?.name != null &&
+                              controller.user.value!.name!.length > 20
+                          ? controller.user.value!.name!.substring(0, 20)
+                          : controller.user.value?.name ?? ''),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -167,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                 activeDotColor: ThemeColors.red3,
               ),
             ),
+            QuickIcons()
           ],
         ),
       ),
@@ -184,112 +190,145 @@ class QuickIcons extends StatefulWidget {
 class QuickIconsState extends State<QuickIcons> {
   PageController pageController = PageController();
 
-  List<Widget> icons = [
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SizedBox(
-        width: 60,
-        height: 100,
-        child: Card(
-          color: ThemeColors.primary1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(
-              Radius.circular(100),
-            ),
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(
-                icons.length,
-                (context) => icons[context],
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 3.0,
+                bottom: 3.0,
+                left: 12.0,
+              ),
+              child: Text(
+                'Quick Links',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+          SizedBox(
+            height: 10,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            SizedBox(
+              width: Get.width / 3 - 20,
+              height: Get.width / 3 - 20,
+              child: InkWell(
+                onTap: () {
+                  Get.to(() => CmsContentPage(
+                        'https://brighten.uniten.edu.my/login/index.php',
+                        'Brighten',
+                      ));
+                },
+                child: Card(
+                  color: ThemeColors.primary1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        UniconsLine.brain,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Brighten \n Portal ⭐️',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: Get.width / 3 - 20,
+              height: Get.width / 3 - 20,
+              child: InkWell(
+                onTap: () {
+                  Get.to(() => CmsContentPage(
+                        'https://www.uniten.edu.my/student-hub/',
+                        'Student Info',
+                      ));
+                },
+                child: Card(
+                  color: ThemeColors.primary1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        UniconsLine.book,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Student \n Info ℹ️',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: Get.width / 3 - 20,
+              height: Get.width / 3 - 20,
+              child: InkWell(
+                onTap: () {
+                  Get.to(() => CmsContentPage(
+                        'https://www.uniten.edu.my/campus-life/services-facilities/transportation/?gad_source=1&gbraid=0AAAAApvmCrjG0PS7ueCjQSs7gQP26HY8e&gclid=EAIaIQobChMIjKja_bf6igMVoahmAh1vLCjtEAAYASAAEgKYGfD_BwE',
+                        'Uniten Shuttle',
+                      ));
+                },
+                child: Card(
+                  color: ThemeColors.primary1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        UniconsLine.clock,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Uniten \n Shuttle  🚌',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ],
+      ),
     );
   }
 }

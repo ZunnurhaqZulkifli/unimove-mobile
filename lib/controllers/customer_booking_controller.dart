@@ -60,6 +60,13 @@ class Booking {
 
   Booking.fromJson(Map<String, dynamic> json) {
     var data = json['booking'];
+    var bookingDetail;
+
+    if ((json['booking_detail']).runtimeType == List<dynamic>) {
+      bookingDetail = json['booking_detail'][0];
+    } else {
+      bookingDetail = json['booking_detail'];
+    }
 
     id = data['id'].toString();
     reference_code = data['reference_code'].toString();
@@ -68,8 +75,8 @@ class Booking {
     accepted_by = data['accepted_by'].toString();
     created_at = data['created_at'].toString();
     updated_at = data['updated_at'].toString();
-    bookingDetails = json['booking_detail'] != null
-        ? BookingDetails.fromJson(json['booking_detail'])
+    bookingDetails = bookingDetail != null
+        ? BookingDetails.fromJson(bookingDetail)
         : null; // patut tarik data ni once order user dah kene accept
   }
 }

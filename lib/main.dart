@@ -8,7 +8,7 @@ import 'package:unimove/themes/theme_controller.dart';
 
 void main() async {
   await GetStorage.init();
-  print('storage initialized...');
+  WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(ThemeController());
   print('app themes initialized...');

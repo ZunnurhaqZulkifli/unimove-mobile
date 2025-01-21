@@ -63,7 +63,7 @@ class _BookingDestinationState extends State<BookingDestination> {
                 color: ThemeColors.primary1,
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://unimove.test/' + widget.destination.image_l!),
+                      ENDPOINT + '/' + widget.destination.image_l!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -123,22 +123,22 @@ class _BookingDestinationState extends State<BookingDestination> {
                                     color: ThemeColors.primary1,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                        image: NetworkImage(
-                                            'https://unimove.test/' +
-                                                bookingController
-                                                    .destinationController
-                                                    .destinations
-                                                    .where(
-                                                      (e) =>
-                                                          e.id
-                                                              .toString()
-                                                              .toLowerCase() ==
-                                                          selectedPickup
-                                                              .toString()
-                                                              .toLowerCase(),
-                                                    )
-                                                    .elementAt(0)
-                                                    .image_l!),
+                                        image: NetworkImage(ENDPOINT +
+                                            '/' +
+                                            bookingController
+                                                .destinationController
+                                                .destinations
+                                                .where(
+                                                  (e) =>
+                                                      e.id
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      selectedPickup
+                                                          .toString()
+                                                          .toLowerCase(),
+                                                )
+                                                .elementAt(0)
+                                                .image_l!),
                                         fit: BoxFit.cover),
                                   ),
                                 ),

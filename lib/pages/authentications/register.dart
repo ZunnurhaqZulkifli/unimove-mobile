@@ -244,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await checkTac();
+                    checkTac();
 
                     (!isTacValid)
                         ? topSnackBarAction(

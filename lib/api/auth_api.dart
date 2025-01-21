@@ -204,10 +204,10 @@ class AuthApi extends Api {
       );
 
       if (response.statusCode == 200) {
-        topSnackBarSuccess(
-          title: 'Biometric Updated !',
-          message: response.data['message'],
-        );
+        // topSnackBarSuccess(
+        //   title: 'Biometric Updated !',
+        //   message: response.data['message'],
+        // );
 
         return true;
       }
