@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/driver_order_controller.dart';
+import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/models/order.dart';
 import 'package:unimove/pages/dashboard.dart';
 import 'package:unimove/themes/theme.dart';
@@ -103,7 +104,12 @@ class _AcceptDriverOrderPageState extends State<AcceptDriverOrderPage> {
             onPressed: () async {
               await widget.driverOrderController.acceptOrder(order);
 
-              Future.delayed(Duration(seconds: 2), () {
+              topSnackBarAction(
+                title: 'Booking Accepted',
+                message: 'Booking Accepted',
+              );
+
+              Future.delayed(Duration(milliseconds: 200), () {
                 Get.offAll(() => Dashboard());
               });
             },
