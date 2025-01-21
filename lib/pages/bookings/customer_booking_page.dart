@@ -83,14 +83,11 @@ class _CustomerBookingPageState extends State<CustomerBookingPage> {
                                               ),
                                             ),
                                             Text(
-                                              '~ RM ' +
-                                                  controller
-                                                      .destinationController
-                                                      .destinations[index]
-                                                      .price!,
+                                              'RM 3.00 ~ RM 5.00',
                                               style: TextStyle(
-                                                color: ThemeColors.black100,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold,
+                                                fontSize: 10,
                                               ),
                                             ),
                                           ],

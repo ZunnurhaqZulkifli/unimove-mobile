@@ -71,7 +71,7 @@ class _RideHistoryPageState extends State<RideHistoryPage> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      ' Form : ${controller.historyBookings[index].bookingDetails!.pickup!.name} \n Drop Off : ${controller.historyBookings[index].bookingDetails!.dropOff!.name}',
+                                      ' Form : ${controller.historyBookings[index].bookingDetails!.pickup!.name} \n Drop Off : ${controller.historyBookings[index].bookingDetails!.dropOff!.name!.length > 20 ? controller.historyBookings[index].bookingDetails!.dropOff!.name!.substring(0, 20) + '...' : controller.historyBookings[index].bookingDetails!.dropOff!.name}',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,

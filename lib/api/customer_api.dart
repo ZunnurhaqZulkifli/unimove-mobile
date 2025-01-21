@@ -63,6 +63,9 @@ class CustomerApi extends Api {
                 (_baseController.customerOrderController.order.value?.status ??
                     ''),
           );
+        } else if (responseData.toString() == '[]') {
+          _baseController.customerOrderController.hasOrder.value = false;
+          _baseController.customerOrderController.order.value = null;
         }
       }
     } on DioException catch (e) {
@@ -211,17 +214,31 @@ class CustomerApi extends Api {
 
       if (response.statusCode == 200) {
         var responseData = response.data['data'];
-        Booking booking = Booking.fromJson(responseData);
-        _baseController.customerBookingController.booking.value = booking;
-        _baseController.customerBookingController.isLoaded.value = true;
 
-        return booking;
+        if (responseData != null) {
+          Booking booking = Booking.fromJson(responseData);
+          _baseController.customerBookingController.booking.value = booking;
+          _baseController.customerBookingController.isLoaded.value = true;
+
+          return booking;
+        } else {
+          // Booking booking = Booking.fromJson(responseData);
+          _baseController.customerBookingController.booking.value = null;
+          _baseController.customerBookingController.isLoaded.value = true;
+          _baseController.customerBookingController.hasBooking.value = false;
+          _baseController.customerOrderController.hasOrder.value = false;
+
+          return null;
+        }
       }
 
       return null;
     } on DioException catch (e) {
       if (e.response != null) {
-        print(e.response!.data);
+        _baseController.customerBookingController.booking.value = null;
+        _baseController.customerBookingController.isLoaded.value = true;
+        _baseController.customerBookingController.hasBooking.value = false;
+        _baseController.customerOrderController.hasOrder.value = false;
       } else {
         print(e);
         return null;
