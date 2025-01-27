@@ -73,34 +73,36 @@ class _OngoingRidePageState extends State<OngoingRidePage> {
         ),
       ),
       persistentFooterButtons: [
-        Container(
-          padding: const EdgeInsets.all(2),
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () async {
-              if (controller.user.value?.type == 'driver') {
-                await driverApi.completeRide(widget.booking.id!);
-              }
+        (controller.user.value?.type == 'driver')
+            ? Container(
+                padding: const EdgeInsets.all(2),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (controller.user.value?.type == 'driver') {
+                      await driverApi.completeRide(widget.booking.id!);
+                    }
 
-              if (controller.user.value?.type == 'student' ||
-                  controller.user.value?.type == 'staff') {
-                await customerApi.completeRide(widget.booking.id!);
-              }
+                    if (controller.user.value?.type == 'student' ||
+                        controller.user.value?.type == 'staff') {
+                      await customerApi.completeRide(widget.booking.id!);
+                    }
 
-              Get.to(() => Dashboard());
-            },
-            child: Text(
-              'Complete',
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
-        ),
+                    Get.to(() => Dashboard());
+                  },
+                  child: Text(
+                    'Complete',
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
       ],
     );
   }
