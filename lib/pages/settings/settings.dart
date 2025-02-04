@@ -50,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 10),
-                      child: Text('Biometric Authentication',
+                      child: Text('Application Mode',
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                     ),

@@ -174,7 +174,11 @@ class _PasscodePageState extends State<PasscodePage> {
             Text('Forgot Passcode ?'),
             TextButton(
               onPressed: () {
-                Get.to(() => ResetPasscodePage());
+                Get.to(() => ResetPasscodePage(
+                  // passcodeTextController: passcodeController,
+                  biometricController: biometricController,
+                  baseController: baseAppController,
+                ));
               },
               child: Text('Reset Passcode'),
             ),
@@ -216,6 +220,11 @@ class _PasscodeGridButtonState extends State<PasscodeGridButton> {
           TextField(
             readOnly: true,
             keyboardType: TextInputType.number,
+            style: TextStyle(
+               color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+            ),
             controller: widget.passcodeController,
             // onTapOutside: (event) {
             //   FocusScope.of(context).unfocus();
@@ -223,6 +232,11 @@ class _PasscodeGridButtonState extends State<PasscodeGridButton> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Enter Passcode',
+              labelStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              )
             ),
             onChanged: (value) => {
               if (value.length == 6)
@@ -332,7 +346,7 @@ class _PasscodeButtonState extends State<PasscodeButton> {
       padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: ThemeColors.orange100,
+          backgroundColor: Color.fromRGBO(75, 75, 75, 1),
           fixedSize: Size(Get.width / 3 - 40, Get.width / 3 - 80),
         ),
         onPressed: () {
@@ -369,18 +383,105 @@ class _PasscodeButtonState extends State<PasscodeButton> {
   }
 }
 
-class ResetPasscodePage extends StatelessWidget {
-  const ResetPasscodePage({super.key});
+class ResetPasscodePage extends StatefulWidget {
+
+  final BiometricController biometricController;
+  final BaseAppController baseController;
+
+  const ResetPasscodePage({
+    super.key,
+    required this.baseController,
+    required this.biometricController,
+  });
 
   @override
+  State<ResetPasscodePage> createState() => _ResetPasscodePageState();
+}
+
+class _ResetPasscodePageState extends State<ResetPasscodePage> {
+  @override
   Widget build(BuildContext context) {
+    TextEditingController passcodeTextController = new TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reset Passcode'),
+        title: Text(
+          'Reset Passcode',
+          style: themeController.currentTheme.textTheme.displayLarge,
+        ),
       ),
-      body: Container(
-        child: Text('Reset Passcode'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: TextField(
+                readOnly: true,
+                keyboardType: TextInputType.number,
+                controller: passcodeTextController,
+                onTapOutside: (event) {
+                  FocusScope.of(context).unfocus();
+                },
+                onTap: () {
+                  showModalBottomSheet(
+                    backgroundColor: Colors.white,
+                    context: context,
+                    builder: (context) {
+                      return PasscodeGridButton(
+                        passcodeController: passcodeTextController,
+                        firstTimeSetup: false,
+                        checkPasscode: () {},
+                        createPasscode: () {},
+                        onKeyPressed: () {
+                          Navigator.pop(context);
+
+                          Future.delayed(
+                            Duration(milliseconds: 200),
+                            () async {
+
+                              print(passcodeTextController.text);
+
+                              await userApi.changePasscode({
+                                'passcode_number': passcodeTextController.text
+                              });
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter New Passcode',
+                ),
+                onChanged: (value) => {
+                  if (value.length == 6)
+                    {
+                      setState(() {
+                        passcodeTextController.text = value;
+                      })
+                    }
+                },
+                maxLength: 6,
+              ),
+            ),
+          ],
+        ),
       ),
+      persistentFooterButtons: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+              },
+              child: Text('Reset Passcode'),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

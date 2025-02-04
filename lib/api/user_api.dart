@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:unimove/controllers/biometric_controller.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
 import 'package:unimove/controllers/customer_booking_controller.dart';
+import 'package:unimove/controllers/customer_order_controller.dart';
 import 'package:unimove/helpers/snackbar_helpers.dart';
 import 'package:unimove/helpers/storage.dart';
 import 'package:unimove/models/order.dart';
 import 'package:unimove/models/user.dart';
 import 'package:unimove/models/wallet.dart';
+import 'package:unimove/pages/dashboard.dart';
+import 'package:unimove/pages/home.dart';
 import 'package:unimove/pages/splash.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -248,6 +252,52 @@ class Api {
         for (var data in responseData) {
           controller.historyBookings.add(Booking.fromJson(data));
         }
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Validation Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future changePasscode(Map<String, dynamic> data) async {
+    try {
+      var response = await dio.post(
+        '$endpoint/api/v1/change-passcode',
+        options: Options(
+          headers: headers(),
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        topSnackBarSuccess(
+          title: 'Passcode Changed !',
+          message: response.data['message'],
+        );
+
+        topSnackBarAction(
+          title: 'Please Wait...',
+          message: 'Changed Passcode !',
+        );
+
+        Future.delayed(Duration(seconds: 3), () {
+          controller.clearSettings();
+          Get.offAll(() => SplashScreen());
+        });
       }
     } on DioException catch (e) {
       if (e.response != null) {

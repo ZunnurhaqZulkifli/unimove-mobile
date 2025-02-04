@@ -90,8 +90,6 @@ class _BookingDestinationState extends State<BookingDestination> {
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           canTapOnHeader: true,
-                          backgroundColor:
-                              const Color.fromARGB(255, 41, 41, 41),
                           isExpanded: is_expanded,
                           headerBuilder: (context, isExpanded) {
                             return ListTile(
@@ -104,20 +102,8 @@ class _BookingDestinationState extends State<BookingDestination> {
                             child: Column(
                               children: [
                                 Container(
-                                  width: Get.width,
-                                  child: Text(
-                                    'Drop Off To :',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: ThemeColors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                                Container(
                                   padding: EdgeInsets.only(bottom: 10),
-                                  height: 200,
+                                  height: 150,
                                   width: Get.width,
                                   decoration: BoxDecoration(
                                     color: ThemeColors.primary1,
@@ -154,7 +140,7 @@ class _BookingDestinationState extends State<BookingDestination> {
                   Container(
                     width: Get.width,
                     child: Text(
-                      'Drop Off To :',
+                      'Drop off :',
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -227,7 +213,7 @@ class _BookingDestinationState extends State<BookingDestination> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Drop Off To : ${widget.destination.name}',
+                          'Pickup From : ${widget.destination.name}',
                           style: TextStyle(
                             color: ThemeColors.white,
                             fontWeight: FontWeight.bold,

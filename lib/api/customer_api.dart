@@ -159,6 +159,52 @@ class CustomerApi extends Api {
     }
   }
 
+  Future cancelOrder(var controller, var id) async {
+    try {
+      var response = await dio.post(
+        '$endpoint/api/v1/customer/cancel-order',
+        options: Options(
+          headers: headers(),
+        ),
+        data:{'order_id' : id}
+      );
+
+      if (response.statusCode == 200) {
+        var responseData = response.data['data'];
+
+        controller.clearSettings();
+
+        topSnackBarSuccess(
+          title: 'Order Cancelled !',
+          message: 'You have cancelled your order',
+        );
+        
+        Future.delayed(Duration(seconds: 2)).then((_) => Get.to(Dashboard()));
+
+      } else {
+        print(response.data);
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+
+        Map<String, dynamic> errors = e.response!.data['errors'];
+        errors.forEach((key, value) {
+          print('$key: ${value.join(', ')}');
+        });
+
+        topSnackBarAction(
+          title: 'Order Error',
+          message: errors.values.map((e) => e.join(', ')).join('\n'),
+        );
+      } else {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<Map<String, dynamic>> calculateData(String df, String dt) async {
     try {
       var response = await dio.post(

@@ -4,11 +4,11 @@ class AppThemes {
   static final ThemeData lightTheme = ThemeData(
     fontFamily: 'Quicksand',
     primarySwatch: MaterialColor(
-        Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
+        Color.fromRGBO(128, 0, 255, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.light,
     scaffoldBackgroundColor: const Color.fromARGB(255, 241, 241, 241),
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
+      backgroundColor: const Color.fromRGBO(128, 0, 255, 1),
       elevation: 5,
       toolbarHeight: 70,
       foregroundColor: Colors.white,
@@ -68,11 +68,11 @@ class AppThemes {
   static final ThemeData darkTheme = ThemeData(
     fontFamily: 'Quicksand',
     primarySwatch: MaterialColor(
-        Color.fromRGBO(246, 4, 4, 1).value, ThemeColors.primarySwatch),
+        Color.fromRGBO(128, 0, 255, 1).value, ThemeColors.primarySwatch),
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const Color.fromARGB(255, 41, 41, 41),
     appBarTheme: AppBarTheme(
-      backgroundColor: const Color.fromRGBO(246, 4, 4, 1),
+      backgroundColor: const Color.fromRGBO(128, 0, 255, 1),
       elevation: 5,
       toolbarHeight: 70,
       foregroundColor: Colors.white,
@@ -124,7 +124,7 @@ class AppThemes {
 }
 
 class ThemeColors {
-  static const Color primary1 = Color.fromRGBO(246, 4, 4, 1);
+  static const Color primary1 = Color.fromRGBO(128, 0, 255, 1);
   static const Color primary2 = Color.fromARGB(255, 192, 0, 0);
   static const Color primary3 = Color.fromARGB(255, 255, 255, 255);
   static const Color primary4 = Color.fromARGB(255, 0, 0, 0);
@@ -148,7 +148,7 @@ class ThemeColors {
   static const Color babyBlue = Color.fromRGBO(103, 164, 255, 1);
 
   static const Color mainRed = Color.fromRGBO(227, 0, 23, 1);
-  static const Color red3 = Color.fromRGBO(246, 4, 4, 1);
+  static const Color red3 = Color.fromRGBO(128, 0, 255, 1);
   static const Color red4 = Color.fromRGBO(255, 213, 0, 1);
 
   static const Color purple110 = Color.fromRGBO(184, 113, 255, 1);
@@ -220,6 +220,6 @@ class ThemeColors {
     600: Color.fromRGBO(246, 4, 4, .7),
     700: Color.fromRGBO(246, 4, 4, .8),
     800: Color.fromRGBO(246, 4, 4, .9),
-    900: Color.fromRGBO(246, 4, 4, 1),
+    900: Color.fromRGBO(128, 0, 255, 1),
   };
 }

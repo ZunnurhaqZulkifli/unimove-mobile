@@ -61,6 +61,7 @@ class _OngoingRidePageState extends State<OngoingRidePage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    controller.customerBookingController.clearSettings();
                     Get.to(() => Dashboard());
                   },
                   child: Text(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:unimove/api/user_api.dart';
 import 'package:unimove/controllers/base_app_controller.dart';
+import 'package:unimove/controllers/customer_order_controller.dart';
 import 'package:unimove/models/order.dart';
 import 'package:unimove/themes/theme.dart';
 
@@ -54,6 +56,15 @@ class _CustomerActiveState extends State<CustomerActiveOrder> {
                 color: ThemeColors.white,
               ),
             ),
+            SizedBox(height: 10),
+            ElevatedButton(onPressed: () async {
+              await customerApi.cancelOrder(
+                controller.customerOrderController,
+                order!.id
+              );
+            }, child: Text('Cancel Order'), style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red
+            ),)
           ],
         ),
       ),

@@ -101,8 +101,8 @@ class OrderDetailButtonsDriver extends StatelessWidget {
             ),
           ),
           child: Container(
-            width: Get.width / 3 - 20,
-            height: Get.width / 3 - 20,
+            width: Get.width / 3 - 30,
+            height: Get.width / 3 - 30,
             child: Card(
               color: ThemeColors.green100,
               child: Center(

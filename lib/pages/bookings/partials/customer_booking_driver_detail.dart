@@ -13,6 +13,7 @@ class OrderDetailButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
           onTap: () => Get.dialog(
@@ -25,8 +26,9 @@ class OrderDetailButtons extends StatelessWidget {
             ),
           ),
           child: Container(
-            width: Get.width / 2 - 80,
-            height: Get.width / 2 - 80,
+            padding: EdgeInsets.all(2),
+            width: Get.width / 2 - 85,
+            height: Get.width / 2 - 85,
             child: Card(
               child: Center(
                 child: Column(
@@ -61,8 +63,9 @@ class OrderDetailButtons extends StatelessWidget {
             ),
           ),
           child: Container(
-            width: Get.width / 2 - 80,
-            height: Get.width / 2 - 80,
+            padding: EdgeInsets.all(2),
+            width: Get.width / 2 - 85,
+            height: Get.width / 2 - 85,
             child: Card(
               color: ThemeColors.blue60,
               child: Center(
@@ -99,8 +102,9 @@ class OrderDetailButtons extends StatelessWidget {
             ),
           ),
           child: Container(
-            width: Get.width / 2 - 80,
-            height: Get.width / 2 - 80,
+            padding: EdgeInsets.all(2),
+            width: Get.width / 2 - 85,
+            height: Get.width / 2 - 85,
             child: Card(
               color: ThemeColors.green100,
               child: Center(
